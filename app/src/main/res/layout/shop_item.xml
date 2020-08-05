@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="uk.co.jakebreen.pokecart.ui.shop.ShopViewModel" />
+        <variable
+            name="viewModelClick"
+            type="uk.co.jakebreen.pokecart.ui.shop.ShopAdapter.ShopViewModelClickListener"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_8dp"
+        app:cardCornerRadius="@dimen/shop_item_card_corner_radius"
+        app:cardPreventCornerOverlap="false"
+        android:onClick="@{(view) -> viewModelClick.onShopViewModelClicked(view, viewModel)}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/root_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimen_8dp">
+
+            <ImageView
+                android:id="@+id/ivPokemonImage"
+                android:layout_width="@dimen/shop_item_image_view_height"
+                android:layout_height="@dimen/dimen_0dp"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                app:image="@{viewModel.image}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/layoutStats"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPokemonName"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                android:gravity="center"
+                android:text="@{viewModel.name}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivPokemonImage"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutStats"
+                android:layout_width="@dimen/dimen_0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivPokemonImage"
+                app:layout_constraintTop_toBottomOf="@id/tvPokemonName">
+
+                <TextView
+                    android:id="@+id/tvPokemonHealth"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="@dimen/shop_item_stats_text_width"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    android:text="@string/stat_health"
+                    app:layout_constraintEnd_toStartOf="@+id/pbPokemonHealth"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/pbPokemonHealth"
+                    style="@style/ProgressBar"
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    android:foregroundGravity="center_horizontal"
+                    android:max="300"
+                    android:progressTint="@android:color/holo_red_light"
+                    app:health="@{viewModel.health}"
+                    app:healthTotal="@{tvPokemonHealthTotal}"
+                    app:layout_constraintEnd_toStartOf="@id/tvPokemonHealthTotal"
+                    app:layout_constraintStart_toEndOf="@id/tvPokemonHealth"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPokemonHealthTotal"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="@dimen/shop_item_stats_total_text_width"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginTop="@dimen/dimen_8dp"
+                    android:gravity="end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/pbPokemonHealth"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/tvPokemonAttack"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="@dimen/shop_item_stats_text_width"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:text="@string/stat_attack"
+                    app:layout_constraintEnd_toStartOf="@+id/pbPokemonAttack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPokemonHealth" />
+
+                <ProgressBar
+                    android:id="@+id/pbPokemonAttack"
+                    style="@style/ProgressBar"
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    android:max="300"
+                    android:progressTint="@android:color/holo_orange_dark"
+                    app:attack="@{viewModel.attack}"
+                    app:attackTotal="@{tvPokemonAttackTotal}"
+                    app:layout_constraintEnd_toStartOf="@id/tvPokemonAttackTotal"
+                    app:layout_constraintStart_toEndOf="@id/tvPokemonAttack"
+                    app:layout_constraintTop_toBottomOf="@id/pbPokemonHealth" />
+
+                <TextView
+                    android:id="@+id/tvPokemonAttackTotal"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="@dimen/shop_item_stats_total_text_width"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:gravity="end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/pbPokemonAttack"
+                    app:layout_constraintTop_toBottomOf="@id/tvPokemonHealthTotal" />
+
+                <TextView
+                    android:id="@+id/tvPokemonDefense"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="@dimen/shop_item_stats_text_width"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:text="@string/stat_defense"
+                    app:layout_constraintEnd_toStartOf="@+id/pbPokemonDefense"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tvPokemonAttack" />
+
+                <ProgressBar
+                    android:id="@+id/pbPokemonDefense"
+                    style="@style/ProgressBar"
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    android:max="300"
+                    android:progressTint="@android:color/holo_orange_light"
+                    app:defense="@{viewModel.defense}"
+                    app:defenseTotal="@{tvPokemonDefenseTotal}"
+                    app:layout_constraintEnd_toStartOf="@id/tvPokemonDefenseTotal"
+                    app:layout_constraintStart_toEndOf="@id/tvPokemonDefense"
+                    app:layout_constraintTop_toBottomOf="@+id/pbPokemonAttack" />
+
+                <TextView
+                    android:id="@+id/tvPokemonDefenseTotal"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="@dimen/shop_item_stats_total_text_width"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:gravity="end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/pbPokemonDefense"
+                    app:layout_constraintTop_toBottomOf="@id/tvPokemonAttackTotal" />
+
+                <TextView
+                    android:id="@+id/tvPokemonSpeed"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="@dimen/shop_item_stats_text_width"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:text="@string/stat_speed"
+                    app:layout_constraintEnd_toStartOf="@+id/pbPokemonSpeed"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvPokemonDefense" />
+
+                <ProgressBar
+                    android:id="@+id/pbPokemonSpeed"
+                    style="@style/ProgressBar"
+                    android:layout_width="@dimen/dimen_0dp"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:layout_marginStart="@dimen/dimen_8dp"
+                    android:layout_marginEnd="@dimen/dimen_8dp"
+                    android:max="300"
+                    android:progressTint="@android:color/holo_purple"
+                    app:layout_constraintEnd_toStartOf="@id/tvPokemonSpeedTotal"
+                    app:layout_constraintStart_toEndOf="@id/tvPokemonSpeed"
+                    app:layout_constraintTop_toBottomOf="@id/pbPokemonDefense"
+                    app:speed="@{viewModel.speed}"
+                    app:speedTotal="@{tvPokemonSpeedTotal}" />
+
+                <TextView
+                    android:id="@+id/tvPokemonSpeedTotal"
+                    style="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="@dimen/shop_item_stats_total_text_width"
+                    android:layout_height="@dimen/dimen_16dp"
+                    android:gravity="end"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/pbPokemonSpeed"
+                    app:layout_constraintTop_toBottomOf="@id/tvPokemonDefenseTotal" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <ImageView
+                android:id="@+id/ivPokemonTypePrimary"
+                android:layout_width="@dimen/dimen_24dp"
+                android:layout_height="@dimen/dimen_24dp"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                app:typePrimary="@{viewModel.typePrimary}"
+                app:layout_constraintStart_toEndOf="@id/ivPokemonImage"
+                app:layout_constraintTop_toBottomOf="@id/layoutStats"/>
+
+            <ImageView
+                android:id="@+id/ivPokemonTypeSecondary"
+                android:layout_width="@dimen/dimen_24dp"
+                android:layout_height="@dimen/dimen_24dp"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                app:typeSecondary="@{viewModel.typeSecondary}"
+                app:layout_constraintStart_toEndOf="@id/ivPokemonTypePrimary"
+                app:layout_constraintTop_toBottomOf="@id/layoutStats"/>
+
+            <TextView
+                android:id="@+id/tvPokemonPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                android:layout_marginEnd="@dimen/dimen_8dp"
+                android:gravity="center"
+                android:text="@={viewModel.price}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/layoutStats" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

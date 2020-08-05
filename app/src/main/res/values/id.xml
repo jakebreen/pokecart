@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="type_normal" type="id"/>
+    <item name="type_fighting" type="id"/>
+    <item name="type_flying" type="id"/>
+    <item name="type_poison" type="id"/>
+    <item name="type_ground" type="id"/>
+    <item name="type_rock" type="id"/>
+    <item name="type_bug" type="id"/>
+    <item name="type_ghost" type="id"/>
+    <item name="type_fire" type="id"/>
+    <item name="type_water" type="id"/>
+    <item name="type_grass" type="id"/>
+    <item name="type_electric" type="id"/>
+    <item name="type_psychic" type="id"/>
+    <item name="type_ice" type="id"/>
+    <item name="type_dragon" type="id"/>
+    <item name="type_fairy" type="id"/>
+    <item name="type_steel" type="id"/>
+    <item name="type_none" type="id"/>
+
+</resources>

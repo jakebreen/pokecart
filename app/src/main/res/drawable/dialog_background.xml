@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@android:color/white"/>
+    <corners android:radius="@dimen/dimen_8dp" />
+    <padding android:left="@dimen/dimen_8dp"
+        android:right="@dimen/dimen_8dp"
+        android:top="@dimen/dimen_8dp"
+        android:bottom="@dimen/dimen_8dp"/>
+</shape>

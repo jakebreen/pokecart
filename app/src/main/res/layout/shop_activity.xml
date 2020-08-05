@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable name="presenter" type="uk.co.jakebreen.pokecart.ui.shop.ShopPresenter" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.shop.ShopActivity">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutCart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageView
+                android:id="@+id/ivDollars"
+                android:layout_width="@dimen/shop_image_width_height"
+                android:layout_height="@dimen/shop_image_width_height"
+                android:layout_margin="@dimen/shop_image_margin"
+                android:src="@drawable/ic_dollar_96"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:onClick="@{() -> presenter.onClick()}" />
+
+            <TextView
+                android:id="@+id/tvDollars"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_12dp"
+                android:text="100"
+                style="@style/TextAppearance.AppCompat.Headline"
+                app:layout_constraintStart_toEndOf="@id/ivDollars"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:layout_width="@dimen/shop_image_width_height"
+                android:layout_height="@dimen/shop_image_width_height"
+                android:layout_margin="@dimen/shop_image_margin"
+                android:src="@drawable/ic_basket_96"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cgCart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_8dp"
+                app:chipMinTouchTargetSize="@dimen/dimen_0dp"
+                android:layout_marginStart="@dimen/dimen_8dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDollars"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvShop"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_0dp"
+            android:requiresFadingEdge="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layoutCart" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Pokecart</string>
+
+    <!--  shop item  -->
+    <string name="stat_health">HP</string>
+    <string name="stat_attack">ATK</string>
+    <string name="stat_defense">DEF</string>
+    <string name="stat_speed">SPD</string>
+
+    <!--  types  -->
+    <string name="type_normal">normal</string>
+    <string name="type_fighting">fighting</string>
+    <string name="type_flying">flying</string>
+    <string name="type_poison">poison</string>
+
+    <!--  filter dialog  -->
+    <string name="filter_types">Types:</string>
+    <string name="filter_health">Health:</string>
+    <string name="filter_attack">Attack:</string>
+    <string name="filter_defense">Defense:</string>
+    <string name="filter_speed">Speed:</string>
+    <string name="filter_apply_filters">Apply Filters</string>
+
+</resources>

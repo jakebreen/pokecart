@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1699FD</color>
+    <color name="colorPrimaryDark">#0272BB</color>
+    <color name="colorAccent">#F8D70E</color>
+
+    <!--  STATS  -->
+    <color name="health_primary">#F10E0E</color>
+    <color name="health_secondary">#EB9191</color>
+    <color name="attack_primary">#FD6700</color>
+    <color name="attack_secondary">#EBB795</color>
+    <color name="defense_primary">#FFD400</color>
+    <color name="defense_secondary">#ECDD96</color>
+    <color name="speed_primary">#F8019D</color>
+    <color name="speed_secondary">#F19ED4</color>
+
+    <!--  CHIPS  -->
+    <color name="chip_selected">#A2A2A2</color>
+    <color name="chip_not_selected">#E2E2E2</color>
+
+</resources>
