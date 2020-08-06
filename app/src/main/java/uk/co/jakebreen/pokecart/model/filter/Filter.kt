@@ -31,6 +31,10 @@ class Filter {
 
     fun postFilterStats(stats: Map<Stat, Pair<Int, Int>>) = this.stats.postValue(stats)
 
+    fun getFilterTypes() = this.types
+
+    fun getFilterStats() = this.stats
+
     fun observerUpdates(): MediatorLiveData<Update> = updates
 
     private fun combineFilters(typesMap: LiveData<Map<Type, Boolean>>,
