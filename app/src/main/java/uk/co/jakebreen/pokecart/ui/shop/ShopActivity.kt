@@ -6,44 +6,45 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.shop_activity.*
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.jakebreen.pokecart.R
 import uk.co.jakebreen.pokecart.databinding.ShopActivityBindingImpl
 import uk.co.jakebreen.pokecart.ui.filter.FilterDialogFragment
+import uk.co.jakebreen.pokecart.ui.shop.item.ShopItemViewModel
 
 
 class ShopActivity : AppCompatActivity(), ShopAdapter.ShopViewModelClickListener {
 
-    private val presenter: ShopPresenter by inject()
+    private val shopViewModel : ShopViewModel by viewModel()
 
     private lateinit var binding: ShopActivityBindingImpl
     private val shopAdapter = ShopAdapter(mutableListOf(), this, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = DataBindingUtil.setContentView(this, R.layout.shop_activity)
         binding.lifecycleOwner = this
-        binding.presenter = presenter
+        binding.viewModel = shopViewModel
+        ivFilterList.setOnClickListener { showFilterDialog() }
 
         rvShop.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = shopAdapter
         }
 
-        presenter.attach(this)
+        shopViewModel.observeViewModelUpdates().observeForever{ showViewModels(it) }
     }
 
-    fun showPokemon(viewModels: List<ShopViewModel>) {
+    private fun showViewModels(viewModels: List<ShopItemViewModel>) {
         shopAdapter.updateAll(viewModels)
         rvShop.layoutManager!!.scrollToPosition(0)
     }
 
-    override fun onShopViewModelClicked(view: View, viewModel: ShopViewModel) {
+    override fun onShopViewModelClicked(view: View, viewModel: ShopItemViewModel) {
 
     }
 
-    fun showFilters() {
+    private fun showFilterDialog() {
         val fragmentManager = supportFragmentManager
         FilterDialogFragment().show(fragmentManager, "filter_dialog")
     }

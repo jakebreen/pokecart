@@ -1,11 +1,11 @@
 package uk.co.jakebreen.pokecart.ui.filter
 
 import androidx.lifecycle.ViewModel
-import uk.co.jakebreen.pokecart.model.filter.Filter
+import uk.co.jakebreen.pokecart.model.filter.FilterRepository
 import uk.co.jakebreen.pokecart.model.stat.Stat
 import uk.co.jakebreen.pokecart.model.type.Type
 
-class FilterDialogViewModel(private val filter: Filter): ViewModel() {
+class FilterDialogViewModel(private val filter: FilterRepository): ViewModel() {
 
     fun getTypes() = filter.getFilterTypes().value
 

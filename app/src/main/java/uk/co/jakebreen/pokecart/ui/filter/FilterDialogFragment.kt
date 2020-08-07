@@ -40,7 +40,7 @@ class FilterDialogFragment: DialogFragment() {
         binding.btApplyFilters.setOnClickListener { onSaveFilters() }
     }
 
-    fun onSaveFilters() {
+    private fun onSaveFilters() {
         val checkedTypes = binding.cgFilterTypes.children
             .map { it as FilterChip }
             .map {

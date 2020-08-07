@@ -9,9 +9,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import uk.co.jakebreen.pokecart.R
 import uk.co.jakebreen.pokecart.databinding.ShopItemBindingImpl
+import uk.co.jakebreen.pokecart.ui.shop.item.ShopItemViewModel
+import uk.co.jakebreen.pokecart.ui.shop.item.ShopItemViewModelDiffCallback
 
 
-class ShopAdapter internal constructor(private val viewModels: MutableList<ShopViewModel>,
+class ShopAdapter internal constructor(private val viewModels: MutableList<ShopItemViewModel>,
                                        private val clickListener: ShopViewModelClickListener,
                                        private val context: Context):
     RecyclerView.Adapter<ShopAdapter.ShopViewHolder>() {
@@ -28,22 +30,26 @@ class ShopAdapter internal constructor(private val viewModels: MutableList<ShopV
     }
 
     inner class ShopViewHolder(private val binding: ShopItemBindingImpl): RecyclerView.ViewHolder(binding.root) {
-        fun bind(viewModel: ShopViewModel) {
+        fun bind(viewModel: ShopItemViewModel) {
             binding.viewModel = viewModel
             binding.viewModelClick = clickListener
             binding.executePendingBindings()
         }
     }
 
-    fun updateAll(updated: List<ShopViewModel>) {
-        val diffResult = DiffUtil.calculateDiff(ShopViewModelDiffCallback(viewModels, updated), false)
+    fun updateAll(updated: List<ShopItemViewModel>) {
+        val diffResult = DiffUtil.calculateDiff(
+            ShopItemViewModelDiffCallback(
+                viewModels,
+                updated
+            ), false)
         viewModels.clear()
         viewModels.addAll(updated)
         diffResult.dispatchUpdatesTo(this)
     }
 
     interface ShopViewModelClickListener {
-        fun onShopViewModelClicked(view: View, viewModel: ShopViewModel)
+        fun onShopViewModelClicked(view: View, viewModel: ShopItemViewModel)
     }
 
 }

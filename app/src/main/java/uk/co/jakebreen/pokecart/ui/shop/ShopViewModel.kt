@@ -1,105 +1,39 @@
 package uk.co.jakebreen.pokecart.ui.shop
 
-import android.animation.ObjectAnimator
-import android.net.Uri
-import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.TextView
-import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.bumptech.glide.Glide
-import uk.co.jakebreen.pokecart.model.pokemon.Pokemon
-import uk.co.jakebreen.pokecart.model.pokemon.PokemonUtils.getImageUriById
-import uk.co.jakebreen.pokecart.model.type.Type
-import kotlin.random.Random
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
+import uk.co.jakebreen.pokecart.model.filter.FilterRepository
+import uk.co.jakebreen.pokecart.model.pokemon.PokemonRepository
+import uk.co.jakebreen.pokecart.model.stat.Stat
+import uk.co.jakebreen.pokecart.ui.shop.item.ShopItemViewModel
 
-class ShopViewModel: ViewModel() {
+class ShopViewModel(private val pokemonRepository: PokemonRepository,
+                    private val shopFilter: FilterRepository): ViewModel() {
 
-    var id = 0
-    var name = ""
-    var image = Uri.EMPTY!!
-    var price = "$0"
-    var health = 0
-    var attack = 0
-    var defense = 0
-    var speed = 0
-    lateinit var typePrimary: Type
-    lateinit var typeSecondary: Type
+    private val viewModels = MutableLiveData<List<ShopItemViewModel>>()
 
-    companion object {
-        fun from(pokemon: Pokemon): ShopViewModel =
-            ShopViewModel().apply {
-                id = pokemon.id
-                name = pokemon.name.capitalize()
-                image = getImageUriById(pokemon.id)
-                price = "$".plus(price())
-                health = pokemon.health
-                attack = pokemon.attack
-                defense = pokemon.defense
-                speed = pokemon.speed
-                typePrimary = pokemon.typePrimary
-                typeSecondary = pokemon.typeSecondary
-            }
+    init {
+        viewModelScope.launch {
+            shopFilter.observerUpdates()
+                .observeForever {
+                    val types = it.typesMap.value!!.filter { it.value }.map { it.key }.toList()
+                    val health = it.statsMap.value!![Stat.HEALTH] ?: Pair(0, 300)
+                    val attack = it.statsMap.value!![Stat.ATTACK] ?: Pair(0, 300)
+                    val defense = it.statsMap.value!![Stat.DEFENSE] ?: Pair(0, 300)
+                    val speed = it.statsMap.value!![Stat.SPEED] ?: Pair(0, 300)
 
-        @JvmStatic
-        @BindingAdapter("image")
-        fun bindImage(view: ImageView, uri: Uri?) =
-            Glide.with(view)
-                .load(uri)
-                .into(view)
-
-        @JvmStatic
-        @BindingAdapter("health", "healthTotal")
-        fun bindHealth(view: ProgressBar, health: Int, text: TextView) {
-            animateProgress(view, health)
-            text.text = getStatTotal(health)
+                    pokemonRepository.getFilteredPokemon(types, health, attack, defense, speed)
+                        .observeForever {
+                            viewModels.postValue(it.map {
+                                ShopItemViewModel.from(it)
+                            }.toList())
+                        }
+                }
         }
-
-        @JvmStatic
-        @BindingAdapter("attack", "attackTotal")
-        fun bindAttack(view: ProgressBar, attack :Int, text: TextView) {
-            animateProgress(view, attack)
-            text.text = getStatTotal(attack)
-        }
-
-        @JvmStatic
-        @BindingAdapter("defense", "defenseTotal")
-        fun bindDefense(view: ProgressBar, defense: Int, text: TextView) {
-            animateProgress(view, defense)
-            text.text = getStatTotal(defense)
-        }
-
-        @JvmStatic
-        @BindingAdapter("speed", "speedTotal")
-        fun bindSpeed(view: ProgressBar, speed: Int, text: TextView) {
-            animateProgress(view, speed)
-            text.text = getStatTotal(speed)
-        }
-
-        @JvmStatic
-        @BindingAdapter("typePrimary")
-        fun bindTypePrimary(view: ImageView, type: Type) =
-            Glide.with(view)
-                .load(Type.getResourceDrawableByType(type))
-                .into(view)
-
-        @JvmStatic
-        @BindingAdapter("typeSecondary")
-        fun bindTypeSecondary(view: ImageView, type: Type) =
-            Glide.with(view)
-                .load(Type.getResourceDrawableByType(type))
-                .fitCenter()
-                .into(view)
-
-        private fun price(): Int = Random.nextInt(2, 8)
-
-        private fun animateProgress(view: ProgressBar, value: Int) =
-            ObjectAnimator.ofInt(view, "progress", value)
-                .setDuration(800)
-                .start()
-
-        private fun getStatTotal(total: Int) = total.toString().plus("/300")
-
     }
+
+    fun observeViewModelUpdates() = this.viewModels
 
 }

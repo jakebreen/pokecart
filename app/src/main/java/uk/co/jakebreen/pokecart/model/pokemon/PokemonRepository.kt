@@ -1,6 +1,5 @@
 package uk.co.jakebreen.pokecart.model.pokemon
 
-import androidx.lifecycle.LiveData
 import org.koin.dsl.module
 import uk.co.jakebreen.pokecart.model.type.Type
 
@@ -9,8 +8,6 @@ val repositoryModule = module {
 }
 
 class PokemonRepository(private val pokemonDao: PokemonDao) {
-
-    fun getPokemonTest(healthMin: Int, healthMax: Int): LiveData<List<Pokemon>> = pokemonDao.getAllPokemonTest(healthMin, healthMax)
 
     fun getFilteredPokemon(types: List<Type>,
                            health: Pair<Int, Int>,
