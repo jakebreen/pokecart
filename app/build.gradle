@@ -62,7 +62,10 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
 
     // koin
-    implementation "org.koin:koin-android:2.0.1"
+    implementation "org.koin:koin-core:$rootProject.koinVersion"
+    implementation "org.koin:koin-android:$rootProject.koinVersion"
+    implementation "org.koin:koin-androidx-scope:$rootProject.koinVersion"
+    implementation "org.koin:koin-androidx-viewmodel:$rootProject.koinVersion"
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"

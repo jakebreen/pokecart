@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="presenter" type="uk.co.jakebreen.pokecart.ui.filter.FilterDialogPresenter" />
+        <variable name="viewModel" type="uk.co.jakebreen.pokecart.ui.filter.FilterDialogViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -123,8 +123,7 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/rsFilterSpeed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:onClick="@{() -> presenter.saveFilters()}"/>
+            app:layout_constraintEnd_toEndOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

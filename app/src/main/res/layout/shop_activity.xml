@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
-        <variable name="presenter" type="uk.co.jakebreen.pokecart.ui.shop.ShopPresenter" />
+        <variable name="viewModel" type="uk.co.jakebreen.pokecart.ui.shop.ShopViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,14 +21,22 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <ImageView
+                android:id="@+id/ivFilterList"
+                android:layout_width="@dimen/shop_image_width_height"
+                android:layout_height="@dimen/shop_image_width_height"
+                android:layout_margin="@dimen/shop_image_margin"
+                android:src="@drawable/ic_filter_list_black_48dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <ImageView
                 android:id="@+id/ivDollars"
                 android:layout_width="@dimen/shop_image_width_height"
                 android:layout_height="@dimen/shop_image_width_height"
                 android:layout_margin="@dimen/shop_image_margin"
                 android:src="@drawable/ic_dollar_96"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:onClick="@{() -> presenter.onClick()}" />
+                app:layout_constraintStart_toEndOf="@id/ivFilterList" />
 
             <TextView
                 android:id="@+id/tvDollars"
