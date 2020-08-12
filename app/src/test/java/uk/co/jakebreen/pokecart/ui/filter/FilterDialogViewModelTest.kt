@@ -3,6 +3,9 @@ package uk.co.jakebreen.pokecart.ui.filter
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.nhaarman.mockitokotlin2.argumentCaptor
+import com.nhaarman.mockitokotlin2.verify
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -40,23 +43,27 @@ class FilterDialogViewModelTest {
 
     @Test
     fun `givenTypesFromRepository thenObserveTypeChanges`() {
-        mutableMapOf<Type, Boolean>().apply {
+        val map = mutableMapOf<Type, Boolean>().apply {
             put(Type.FIGHTING, true)
             put(Type.FAIRY, true)
             put(Type.GROUND, false)
         }.also { types.postValue(it) }
 
-        Mockito.verify(typesObserver).onChanged(types.value)
+        argumentCaptor<Map<Type, Boolean>>().apply {
+            verify(typesObserver).onChanged(capture())
+        }.run { assertEquals(map, firstValue) }
     }
 
     @Test
     fun `givenStatsFromRepository thenObserveStatChanges`() {
-        mutableMapOf<Stat, Pair<Int, Int>>().apply {
+        val map = mutableMapOf<Stat, Pair<Int, Int>>().apply {
             put(Stat.HEALTH, Pair(50, 100))
             put(Stat.SPEED, Pair(0, 300))
         }.also { stats.postValue(it) }
 
-        Mockito.verify(statsObserver).onChanged(stats.value)
+        argumentCaptor<Map<Stat, Pair<Int, Int>>>().apply {
+            verify(statsObserver).onChanged(capture())
+        }.run { assertEquals(map, firstValue) }
     }
 
     @Test
@@ -68,9 +75,9 @@ class FilterDialogViewModelTest {
         }
 
         val health = listOf(50F, 100F)
-        val attack = listOf(00F, 300F)
-        val defense = listOf(00F, 300F)
-        val speed = listOf(00F, 250F)
+        val attack = listOf(0F, 300F)
+        val defense = listOf(0F, 300F)
+        val speed = listOf(0F, 250F)
 
         viewModel.saveFilters(typesMap, health, attack, defense, speed)
 

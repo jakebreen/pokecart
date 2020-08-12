@@ -7,10 +7,12 @@ import kotlinx.coroutines.launch
 import uk.co.jakebreen.pokecart.model.filter.FilterRepository
 import uk.co.jakebreen.pokecart.model.pokemon.PokemonRepository
 import uk.co.jakebreen.pokecart.model.stat.Stat
+import uk.co.jakebreen.pokecart.ui.shop.item.ShopItemResources
 import uk.co.jakebreen.pokecart.ui.shop.item.ShopItemViewModel
 
 class ShopViewModel(private val pokemonRepository: PokemonRepository,
-                    private val filterRepository: FilterRepository): ViewModel() {
+                    private val filterRepository: FilterRepository,
+                    private val resources: ShopItemResources): ViewModel() {
 
     val items = MutableLiveData<List<ShopItemViewModel>>()
 
@@ -24,7 +26,7 @@ class ShopViewModel(private val pokemonRepository: PokemonRepository,
 
                 pokemonRepository.getFilteredPokemon(it.typesList, health, attack, defense, speed)
                     .observeForever {
-                        items.postValue(it.map { ShopItemViewModel.from(it) }.toList())
+                        items.postValue(it.map { ShopItemViewModel.from(it, resources) }.toList())
                     }
             }
         }

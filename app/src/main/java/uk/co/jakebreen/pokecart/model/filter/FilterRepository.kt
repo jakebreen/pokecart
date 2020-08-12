@@ -1,5 +1,6 @@
 package uk.co.jakebreen.pokecart.model.filter
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import uk.co.jakebreen.pokecart.model.stat.Stat
@@ -10,7 +11,8 @@ class FilterRepository(private val types: MutableLiveData<Map<Type, Boolean>>,
 
     fun getFilterTypes() = types
 
-    private fun matchEnabledTypes(types: Map<Type, Boolean>) = types.filterValues { it }.map { it.key }.toList()
+    @VisibleForTesting
+    fun matchEnabledTypes(types: Map<Type, Boolean>) = types.filterValues { it }.map { it.key }.toList()
 
     fun getFilterStats() = stats
 
@@ -19,7 +21,8 @@ class FilterRepository(private val types: MutableLiveData<Map<Type, Boolean>>,
     }
 
     fun postFilterStats(statsMap: Map<Stat, Pair<Int, Int>>) {
-        if (stats.value != statsMap) stats.postValue(statsMap)
+        if (stats.value != statsMap)
+            stats.postValue(statsMap)
     }
 
     private var updates = MediatorLiveData<Update>().apply {

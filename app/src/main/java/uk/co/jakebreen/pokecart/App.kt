@@ -1,6 +1,10 @@
 package uk.co.jakebreen.pokecart
 
 import android.app.Application
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -16,6 +20,11 @@ class App: Application() {
 
     private val databaseManager: DatabaseManager by inject()
 
+    private val exceptionHandler = CoroutineExceptionHandler {_, exception ->
+        databaseManager.clearTables()
+        Timber.e(exception)
+    }
+
     override fun onCreate() {
         super.onCreate()
 
@@ -29,11 +38,16 @@ class App: Application() {
                 repositoryModule,
                 shopModule,
                 filterModule,
-                filterDialogModule
-            ))
+                filterDialogModule))
         }
 
-        databaseManager.onStart()
+        startDatabase()
+    }
+
+    private fun startDatabase() {
+        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
+            databaseManager.onStart()
+        }
     }
 
 }

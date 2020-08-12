@@ -1,8 +1,7 @@
 package uk.co.jakebreen.pokecart.persistence
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import timber.log.Timber
 import uk.co.jakebreen.pokecart.api.PokemonApi
 import uk.co.jakebreen.pokecart.model.pokemon.Pokemon
 import uk.co.jakebreen.pokecart.model.pokemon.PokemonDao
@@ -15,8 +14,8 @@ class DatabaseManager(private val database: PokemonRoomDatabase,
         const val TOTAL_POKEMON = 151
     }
 
-    fun onStart() {
-        CoroutineScope(Dispatchers.IO).launch {
+    suspend fun onStart() {
+        withContext(Dispatchers.IO) {
             if (isDatabaseComplete()) {
                 clearTables()
                 populateTables()
@@ -26,7 +25,7 @@ class DatabaseManager(private val database: PokemonRoomDatabase,
 
     private suspend fun isDatabaseComplete(): Boolean = pokemonDao.getPokemonCount() != TOTAL_POKEMON
 
-    private fun clearTables() {
+    fun clearTables() {
         database.clearAllTables()
     }
 

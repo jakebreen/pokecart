@@ -9,7 +9,6 @@ import androidx.databinding.BindingAdapter
 import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import uk.co.jakebreen.pokecart.model.pokemon.Pokemon
-import uk.co.jakebreen.pokecart.model.pokemon.PokemonUtils.getImageUriById
 import uk.co.jakebreen.pokecart.model.type.Type
 import kotlin.random.Random
 
@@ -17,7 +16,7 @@ class ShopItemViewModel: ViewModel() {
 
     var id = 0
     var name = ""
-    var image = Uri.EMPTY!!
+    lateinit var image: Uri
     var price = "$0"
     var health = 0
     var attack = 0
@@ -27,11 +26,11 @@ class ShopItemViewModel: ViewModel() {
     lateinit var typeSecondary: Type
 
     companion object {
-        fun from(pokemon: Pokemon): ShopItemViewModel =
+        fun from(pokemon: Pokemon, resources: ShopItemResources): ShopItemViewModel =
             ShopItemViewModel().apply {
                 id = pokemon.id
                 name = pokemon.name.capitalize()
-                image = getImageUriById(pokemon.id)
+                image = resources.getImageUriById(pokemon.id)
                 price = "$".plus(price())
                 health = pokemon.health
                 attack = pokemon.attack
@@ -102,4 +101,7 @@ class ShopItemViewModel: ViewModel() {
 
     }
 
+    override fun equals(other: Any?): Boolean {
+        return (other as ShopItemViewModel).id == id
+    }
 }
