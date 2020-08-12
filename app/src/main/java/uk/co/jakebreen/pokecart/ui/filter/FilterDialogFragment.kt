@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
+import androidx.lifecycle.Observer
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import uk.co.jakebreen.pokecart.R
 import uk.co.jakebreen.pokecart.databinding.FilterDialogFragmentBinding
@@ -35,14 +36,14 @@ class FilterDialogFragment: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        filterViewModel.getTypes()?.let { showFilterChips(it) }
-        filterViewModel.getStats()?.let { applyStats(it) }
+        filterViewModel.types.observe(viewLifecycleOwner, Observer { showFilterChips(it) })
+        filterViewModel.stats.observe(viewLifecycleOwner, Observer { applyStats(it) })
         binding.btApplyFilters.setOnClickListener { onSaveFilters() }
     }
 
     private fun onSaveFilters() {
         val checkedTypes = binding.cgFilterTypes.children
-            .map { it as FilterChip }
+            .filterIsInstance(FilterChip::class.java)
             .map {
                 val type = Type.getTypeByResourceId(it.tag as Int)!!
                 Pair(type, it.isChecked)
@@ -58,7 +59,7 @@ class FilterDialogFragment: DialogFragment() {
         dismiss()
     }
 
-    fun showFilterChips(types: Map<Type, Boolean>) {
+    private fun showFilterChips(types: Map<Type, Boolean>) {
         binding.cgFilterTypes.apply {
             removeAllViews()
             types.forEach {

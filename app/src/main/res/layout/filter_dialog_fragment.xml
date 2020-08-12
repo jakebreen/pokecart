@@ -46,9 +46,9 @@
             style="@style/StatSlider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:trackColorActive="@color/health_primary"
+            app:trackColorActive="@android:color/holo_red_light"
             app:trackColorInactive="@color/health_secondary"
-            app:thumbColor="@color/health_primary"
+            app:thumbColor="@android:color/holo_red_light"
             app:layout_constraintTop_toBottomOf="@+id/tvFilterHealth"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -67,9 +67,9 @@
             style="@style/StatSlider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:trackColorActive="@color/attack_primary"
+            app:trackColorActive="@android:color/holo_orange_dark"
             app:trackColorInactive="@color/attack_secondary"
-            app:thumbColor="@color/attack_primary"
+            app:thumbColor="@android:color/holo_orange_dark"
             app:layout_constraintTop_toBottomOf="@+id/tvFilterAttack"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -88,9 +88,9 @@
             style="@style/StatSlider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:trackColorActive="@color/defense_primary"
+            app:trackColorActive="@android:color/holo_orange_light"
             app:trackColorInactive="@color/defense_secondary"
-            app:thumbColor="@color/defense_primary"
+            app:thumbColor="@android:color/holo_orange_light"
             app:layout_constraintTop_toBottomOf="@+id/tvFilterDefense"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -112,9 +112,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvFilterSpeed"
-            app:thumbColor="@color/speed_primary"
-            app:trackColorActive="@color/speed_primary"
-            app:trackColorInactive="@color/speed_secondary" />
+            app:thumbColor="@android:color/holo_purple"
+            app:trackColorInactive="@color/speed_secondary"
+            app:trackColorActive="@android:color/holo_purple" />
 
         <Button
             android:id="@+id/btApplyFilters"

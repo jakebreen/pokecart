@@ -32,7 +32,7 @@ class ShopActivity : AppCompatActivity(), ShopAdapter.ShopViewModelClickListener
             adapter = shopAdapter
         }
 
-        shopViewModel.observeViewModelUpdates().observeForever{ showViewModels(it) }
+        shopViewModel.items.observeForever{ showViewModels(it) }
     }
 
     private fun showViewModels(viewModels: List<ShopItemViewModel>) {
