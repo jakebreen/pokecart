@@ -1,15 +1,22 @@
 package uk.co.jakebreen.pokecart.ui.filter
 
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import uk.co.jakebreen.pokecart.model.filter.FilterRepository
 import uk.co.jakebreen.pokecart.model.stat.Stat
 import uk.co.jakebreen.pokecart.model.type.Type
 
 class FilterDialogViewModel(private val filter: FilterRepository): ViewModel() {
 
-    fun getTypes() = filter.getFilterTypes().value
+    private val _types = MutableLiveData<Map<Type, Boolean>>()
+    private val _stats = MutableLiveData<Map<Stat, Pair<Int, Int>>>()
 
-    fun getStats() = filter.getFilterStats().value
+    val types = Transformations.switchMap(_types) { filter.getFilterTypes() }
+    val stats = Transformations.switchMap(_stats) { filter.getFilterStats() }
+
+    init {
+        _types.postValue(filter.getFilterTypes().value)
+        _stats.postValue(filter.getFilterStats().value)
+    }
 
     fun saveFilters(checkedTypes: Map<Type, Boolean>, health: List<Float>, attack: List<Float>, defense: List<Float>, speed: List<Float>) {
         filter.postFilterTypes(checkedTypes)
