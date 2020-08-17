@@ -1,9 +1,6 @@
 package uk.co.jakebreen.pokecart.ui.shop
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import androidx.lifecycle.*
 import uk.co.jakebreen.pokecart.model.filter.FilterRepository
 import uk.co.jakebreen.pokecart.model.pokemon.PokemonRepository
 import uk.co.jakebreen.pokecart.model.stat.Stat
@@ -14,22 +11,21 @@ class ShopViewModel(private val pokemonRepository: PokemonRepository,
                     private val filterRepository: FilterRepository,
                     private val resources: ShopItemResources): ViewModel() {
 
-    val items = MutableLiveData<List<ShopItemViewModel>>()
+    private val viewModels = Transformations.switchMap(filterRepository.observeUpdates()) { update -> updateViewModels(update) }
 
-    init {
-        viewModelScope.launch {
-            filterRepository.observeUpdates().observeForever {
-                val health = it.statsMap[Stat.HEALTH] ?: Pair(0, 300)
-                val attack = it.statsMap[Stat.ATTACK] ?: Pair(0, 300)
-                val defense = it.statsMap[Stat.DEFENSE] ?: Pair(0, 300)
-                val speed = it.statsMap[Stat.SPEED] ?: Pair(0, 300)
+    private fun updateViewModels(update: FilterRepository.Update): LiveData<List<ShopItemViewModel>> {
+        val health = update.statsMap[Stat.HEALTH] ?: Pair(0, 300)
+        val attack = update.statsMap[Stat.ATTACK] ?: Pair(0, 300)
+        val defense = update.statsMap[Stat.DEFENSE] ?: Pair(0, 300)
+        val speed = update.statsMap[Stat.SPEED] ?: Pair(0, 300)
 
-                pokemonRepository.getFilteredPokemon(it.typesList, health, attack, defense, speed)
-                    .observeForever {
-                        items.postValue(it.map { ShopItemViewModel.from(it, resources) }.toList())
-                    }
+        return pokemonRepository.getFilteredPokemon(update.typesList, health, attack, defense, speed).let { pokemonLiveData ->
+            Transformations.map(pokemonLiveData) { pokemonList ->
+                pokemonList.map { pokemon -> ShopItemViewModel.from(pokemon, resources) }
             }
         }
     }
+
+    fun observeViewModels() = viewModels
 
 }
