@@ -54,14 +54,8 @@ class ShopViewModelTest {
         Mockito.`when`(resources.getImageUriById(2)).thenReturn(Mockito.mock(Uri::class.java))
         Mockito.`when`(resources.getImageUriById(3)).thenReturn(Mockito.mock(Uri::class.java))
 
-        Dispatchers.setMain(Dispatchers.Unconfined)
         viewModel = ShopViewModel(pokemonRepository, filterRepository, resources)
-        viewModel.items.observeForever(itemsObserver)
-    }
-
-    @After
-    fun cleanup() {
-        Dispatchers.setMain(Dispatchers.Default)
+        viewModel.observeViewModels().observeForever(itemsObserver)
     }
 
     @Test

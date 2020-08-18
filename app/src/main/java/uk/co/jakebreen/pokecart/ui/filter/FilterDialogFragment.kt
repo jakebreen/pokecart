@@ -9,7 +9,8 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.android.ext.android.getKoin
+import org.koin.core.qualifier.named
 import uk.co.jakebreen.pokecart.R
 import uk.co.jakebreen.pokecart.databinding.FilterDialogFragmentBinding
 import uk.co.jakebreen.pokecart.model.stat.Stat
@@ -17,7 +18,9 @@ import uk.co.jakebreen.pokecart.model.type.Type
 
 class FilterDialogFragment: DialogFragment() {
 
-    private val filterViewModel : FilterDialogViewModel by viewModel()
+    private val scope = getKoin().getOrCreateScope("filter_scope_id", named<FilterDialogFragment>())
+
+    private val filterViewModel : FilterDialogViewModel by scope.inject()
 
     private lateinit var binding: FilterDialogFragmentBinding
 

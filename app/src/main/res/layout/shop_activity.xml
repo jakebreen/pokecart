@@ -12,49 +12,18 @@
         android:layout_height="match_parent"
         tools:context=".ui.shop.ShopActivity">
 
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar_include"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutCart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_include"
             app:layout_constraintEnd_toEndOf="parent">
-
-            <ImageView
-                android:id="@+id/ivFilterList"
-                android:layout_width="@dimen/shop_image_width_height"
-                android:layout_height="@dimen/shop_image_width_height"
-                android:layout_margin="@dimen/shop_image_margin"
-                android:src="@drawable/ic_filter_list_black_48dp"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <ImageView
-                android:id="@+id/ivDollars"
-                android:layout_width="@dimen/shop_image_width_height"
-                android:layout_height="@dimen/shop_image_width_height"
-                android:layout_margin="@dimen/shop_image_margin"
-                android:src="@drawable/ic_dollar_96"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivFilterList" />
-
-            <TextView
-                android:id="@+id/tvDollars"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_12dp"
-                android:text="100"
-                style="@style/TextAppearance.AppCompat.Headline"
-                app:layout_constraintStart_toEndOf="@id/ivDollars"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:layout_width="@dimen/shop_image_width_height"
-                android:layout_height="@dimen/shop_image_width_height"
-                android:layout_margin="@dimen/shop_image_margin"
-                android:src="@drawable/ic_basket_96"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
 
             <com.google.android.material.chip.ChipGroup
                 android:id="@+id/cgCart"
@@ -64,7 +33,7 @@
                 app:chipMinTouchTargetSize="@dimen/dimen_0dp"
                 android:layout_marginStart="@dimen/dimen_8dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvDollars"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

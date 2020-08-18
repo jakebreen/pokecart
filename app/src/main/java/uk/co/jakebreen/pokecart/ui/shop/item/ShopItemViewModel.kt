@@ -12,33 +12,34 @@ import uk.co.jakebreen.pokecart.model.pokemon.Pokemon
 import uk.co.jakebreen.pokecart.model.type.Type
 import kotlin.random.Random
 
-class ShopItemViewModel: ViewModel() {
+class ShopItemViewModel(
+    var id: Int,
+    var name: String,
+    var image: Uri,
+    var price: String,
+    var health: Int,
+    var attack: Int,
+    var defense: Int,
+    var speed: Int,
+    var typePrimary: Type,
+    var typeSecondary: Type
+): ViewModel() {
 
-    var id = 0
-    var name = ""
-    lateinit var image: Uri
-    var price = "$0"
-    var health = 0
-    var attack = 0
-    var defense = 0
-    var speed = 0
-    lateinit var typePrimary: Type
-    lateinit var typeSecondary: Type
+    override fun equals(other: Any?) = (other as ShopItemViewModel).id == id
 
     companion object {
-        fun from(pokemon: Pokemon, resources: ShopItemResources): ShopItemViewModel =
-            ShopItemViewModel().apply {
-                id = pokemon.id
-                name = pokemon.name.capitalize()
-                image = resources.getImageUriById(pokemon.id)
-                price = "$".plus(price())
-                health = pokemon.health
-                attack = pokemon.attack
-                defense = pokemon.defense
-                speed = pokemon.speed
-                typePrimary = pokemon.typePrimary
-                typeSecondary = pokemon.typeSecondary
-            }
+        fun from(pokemon: Pokemon, resources: ShopItemResources) = ShopItemViewModel(
+            id = pokemon.id,
+            name = pokemon.name.capitalize(),
+            image = resources.getImageUriById(pokemon.id),
+            price = "$".plus(price()),
+            health = pokemon.health,
+            attack = pokemon.attack,
+            defense = pokemon.defense,
+            speed = pokemon.speed,
+            typePrimary = pokemon.typePrimary,
+            typeSecondary = pokemon.typeSecondary
+        )
 
         @JvmStatic
         @BindingAdapter("image")
@@ -101,7 +102,4 @@ class ShopItemViewModel: ViewModel() {
 
     }
 
-    override fun equals(other: Any?): Boolean {
-        return (other as ShopItemViewModel).id == id
-    }
 }
