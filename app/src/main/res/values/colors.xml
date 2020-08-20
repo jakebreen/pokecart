@@ -14,8 +14,4 @@
     <color name="speed_primary">#F8019D</color>
     <color name="speed_secondary">#F19ED4</color>
 
-    <!--  CHIPS  -->
-    <color name="chip_selected">#A2A2A2</color>
-    <color name="chip_not_selected">#E2E2E2</color>
-
 </resources>

@@ -74,7 +74,7 @@
 
                 <ProgressBar
                     android:id="@+id/pbPokemonHealth"
-                    style="@style/ProgressBar"
+                    style="@style/AppTheme.ProgressBar"
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="@dimen/dimen_16dp"
                     android:layout_marginStart="@dimen/dimen_8dp"
@@ -85,6 +85,7 @@
                     android:progressTint="@android:color/holo_red_light"
                     app:health="@{viewModel.health}"
                     app:healthTotal="@{tvPokemonHealthTotal}"
+                    app:hasAnimated="@{viewModel.hasAnimated}"
                     app:layout_constraintEnd_toStartOf="@id/tvPokemonHealthTotal"
                     app:layout_constraintStart_toEndOf="@id/tvPokemonHealth"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -112,7 +113,7 @@
 
                 <ProgressBar
                     android:id="@+id/pbPokemonAttack"
-                    style="@style/ProgressBar"
+                    style="@style/AppTheme.ProgressBar"
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="@dimen/dimen_16dp"
                     android:layout_marginStart="@dimen/dimen_8dp"
@@ -121,6 +122,7 @@
                     android:progressTint="@android:color/holo_orange_dark"
                     app:attack="@{viewModel.attack}"
                     app:attackTotal="@{tvPokemonAttackTotal}"
+                    app:hasAnimated="@{viewModel.hasAnimated}"
                     app:layout_constraintEnd_toStartOf="@id/tvPokemonAttackTotal"
                     app:layout_constraintStart_toEndOf="@id/tvPokemonAttack"
                     app:layout_constraintTop_toBottomOf="@id/pbPokemonHealth" />
@@ -147,7 +149,7 @@
 
                 <ProgressBar
                     android:id="@+id/pbPokemonDefense"
-                    style="@style/ProgressBar"
+                    style="@style/AppTheme.ProgressBar"
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="@dimen/dimen_16dp"
                     android:layout_marginStart="@dimen/dimen_8dp"
@@ -156,6 +158,7 @@
                     android:progressTint="@android:color/holo_orange_light"
                     app:defense="@{viewModel.defense}"
                     app:defenseTotal="@{tvPokemonDefenseTotal}"
+                    app:hasAnimated="@{viewModel.hasAnimated}"
                     app:layout_constraintEnd_toStartOf="@id/tvPokemonDefenseTotal"
                     app:layout_constraintStart_toEndOf="@id/tvPokemonDefense"
                     app:layout_constraintTop_toBottomOf="@+id/pbPokemonAttack" />
@@ -182,18 +185,19 @@
 
                 <ProgressBar
                     android:id="@+id/pbPokemonSpeed"
-                    style="@style/ProgressBar"
+                    style="@style/AppTheme.ProgressBar"
                     android:layout_width="@dimen/dimen_0dp"
                     android:layout_height="@dimen/dimen_16dp"
                     android:layout_marginStart="@dimen/dimen_8dp"
                     android:layout_marginEnd="@dimen/dimen_8dp"
                     android:max="300"
                     android:progressTint="@android:color/holo_purple"
+                    app:speed="@{viewModel.speed}"
+                    app:speedTotal="@{tvPokemonSpeedTotal}"
+                    app:hasAnimated="@{viewModel.hasAnimated}"
                     app:layout_constraintEnd_toStartOf="@id/tvPokemonSpeedTotal"
                     app:layout_constraintStart_toEndOf="@id/tvPokemonSpeed"
-                    app:layout_constraintTop_toBottomOf="@id/pbPokemonDefense"
-                    app:speed="@{viewModel.speed}"
-                    app:speedTotal="@{tvPokemonSpeedTotal}" />
+                    app:layout_constraintTop_toBottomOf="@id/pbPokemonDefense" />
 
                 <TextView
                     android:id="@+id/tvPokemonSpeedTotal"

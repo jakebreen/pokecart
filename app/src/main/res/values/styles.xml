@@ -8,15 +8,20 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+    <style name="AppTheme.ProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:scaleY">2</item>
     </style>
 
-    <style name="StatSlider" parent="Base.Widget.MaterialComponents.Slider">
+    <style name="AppTheme.StatSlider" parent="Base.Widget.MaterialComponents.Slider">
         <item name="thumbRadius">8dp</item>
         <item name="android:stepSize">10</item>
         <item name="android:valueFrom">0.0</item>
         <item name="android:valueTo">300.0</item>
+    </style>
+
+    <style name="AppTheme.ChoiceChips" parent="@style/Widget.MaterialComponents.Chip.Choice">
+        <item name="chipIconVisible">true</item>
+        <item name="android:checkable">true</item>
     </style>
 
 </resources>

@@ -46,7 +46,7 @@
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/rsFilterHealth"
-                style="@style/StatSlider"
+                style="@style/AppTheme.StatSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:trackColorActive="@android:color/holo_red_light"
@@ -68,7 +68,7 @@
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/rsFilterAttack"
-                style="@style/StatSlider"
+                style="@style/AppTheme.StatSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:trackColorActive="@android:color/holo_orange_dark"
@@ -89,7 +89,7 @@
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/rsFilterDefense"
-                style="@style/StatSlider"
+                style="@style/AppTheme.StatSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:trackColorActive="@android:color/holo_orange_light"
@@ -110,7 +110,7 @@
 
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/rsFilterSpeed"
-                style="@style/StatSlider"
+                style="@style/AppTheme.StatSlider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
