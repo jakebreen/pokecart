@@ -22,10 +22,16 @@ class ShopItemViewModel(
     var defense: Int,
     var speed: Int,
     var typePrimary: Type,
-    var typeSecondary: Type
+    var typeSecondary: Type,
+    var hasAnimated: Boolean
 ): ViewModel() {
 
     override fun equals(other: Any?) = (other as ShopItemViewModel).id == id
+    override fun hashCode() = id
+
+    fun setAnimated() {
+        hasAnimated = true
+    }
 
     companion object {
         fun from(pokemon: Pokemon, resources: ShopItemResources) = ShopItemViewModel(
@@ -38,7 +44,8 @@ class ShopItemViewModel(
             defense = pokemon.defense,
             speed = pokemon.speed,
             typePrimary = pokemon.typePrimary,
-            typeSecondary = pokemon.typeSecondary
+            typeSecondary = pokemon.typeSecondary,
+            hasAnimated = false
         )
 
         @JvmStatic
@@ -49,30 +56,42 @@ class ShopItemViewModel(
                 .into(view)
 
         @JvmStatic
-        @BindingAdapter("health", "healthTotal")
-        fun bindHealth(view: ProgressBar, health: Int, text: TextView) {
-            animateProgress(view, health)
+        @BindingAdapter("health", "healthTotal", "hasAnimated")
+        fun bindHealth(view: ProgressBar, health: Int, text: TextView, hasAnimated: Boolean) {
+            if (!hasAnimated) {
+                view.progress = 0
+                animateProgress(view, health)
+            }
             text.text = getStatTotal(health)
         }
 
         @JvmStatic
-        @BindingAdapter("attack", "attackTotal")
-        fun bindAttack(view: ProgressBar, attack :Int, text: TextView) {
-            animateProgress(view, attack)
+        @BindingAdapter("attack", "attackTotal", "hasAnimated")
+        fun bindAttack(view: ProgressBar, attack :Int, text: TextView, hasAnimated: Boolean) {
+            if (!hasAnimated) {
+                view.progress = 0
+                animateProgress(view, attack)
+            }
             text.text = getStatTotal(attack)
         }
 
         @JvmStatic
-        @BindingAdapter("defense", "defenseTotal")
-        fun bindDefense(view: ProgressBar, defense: Int, text: TextView) {
-            animateProgress(view, defense)
+        @BindingAdapter("defense", "defenseTotal", "hasAnimated")
+        fun bindDefense(view: ProgressBar, defense: Int, text: TextView, hasAnimated: Boolean) {
+            if (!hasAnimated) {
+                view.progress = 0
+                animateProgress(view, defense)
+            }
             text.text = getStatTotal(defense)
         }
 
         @JvmStatic
-        @BindingAdapter("speed", "speedTotal")
-        fun bindSpeed(view: ProgressBar, speed: Int, text: TextView) {
-            animateProgress(view, speed)
+        @BindingAdapter("speed", "speedTotal", "hasAnimated")
+        fun bindSpeed(view: ProgressBar, speed: Int, text: TextView, hasAnimated: Boolean) {
+            if (!hasAnimated) {
+                view.progress = 0
+                animateProgress(view, speed)
+            }
             text.text = getStatTotal(speed)
         }
 

@@ -34,6 +34,9 @@ class ShopAdapter internal constructor(private val viewModels: MutableList<ShopI
             binding.viewModel = viewModel
             binding.viewModelClick = clickListener
             binding.executePendingBindings()
+            binding.viewModel?.apply {
+                setAnimated()
+            }
         }
     }
 
