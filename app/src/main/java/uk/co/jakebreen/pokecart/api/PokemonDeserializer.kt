@@ -6,7 +6,7 @@ import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
 import uk.co.jakebreen.pokecart.model.pokemon.Pokemon
 import uk.co.jakebreen.pokecart.model.stat.Stat
-import java.lang.reflect.Type
+import uk.co.jakebreen.pokecart.model.type.Type
 
 
 class PokemonDeserializer: JsonDeserializer<Pokemon> {
@@ -22,40 +22,51 @@ class PokemonDeserializer: JsonDeserializer<Pokemon> {
     }
 
     @SuppressLint("DefaultLocale")
-    override fun deserialize(json: JsonElement?, typeOfT: Type?, context: JsonDeserializationContext?): Pokemon {
-        val root = json?.asJsonObject!!
+    override fun deserialize(json: JsonElement?, typeOfT: java.lang.reflect.Type?, context: JsonDeserializationContext?): Pokemon? {
+        val root = json?.asJsonObject
 
-        val name = root.get(KEY_NAME)?.asString!!
-        val id = root.get(KEY_ID)?.asInt!!
+        return root?.let {
+            val name = root.get(KEY_NAME)?.asString ?: return null
+            val id = root.get(KEY_ID)?.asInt ?: return null
 
-        var health = 0
-        var attack = 0
-        var defense = 0
-        var speed = 0
+            var health = 0
+            var attack = 0
+            var defense = 0
+            var speed = 0
 
-        val statsArray = root.get(KEY_STATS)?.asJsonArray!!
-        for (i in 0 until statsArray.size()) {
-            val stat = Stat.getStatByName(statsArray.get(i).asJsonObject.get(KEY_STAT).asJsonObject.get(KEY_NAME).asString)
-            val statValue = statsArray.get(i).asJsonObject.get(KEY_BASE_STAT).asInt
-            when(stat) {
-                Stat.HEALTH -> health = statValue
-                Stat.ATTACK -> attack = statValue
-                Stat.DEFENSE -> defense = statValue
-                Stat.SPEED -> speed = statValue
+            val statsArray = root.get(KEY_STATS)?.asJsonArray
+            statsArray?.also {
+                for (i in 0 until statsArray.size()) {
+                    val stat = Stat.getStatByName(statsArray.get(i).asJsonObject.get(KEY_STAT).asJsonObject.get(KEY_NAME).asString)
+                    val statValue = statsArray.get(i).asJsonObject.get(KEY_BASE_STAT).asInt
+                    when(stat) {
+                        Stat.HEALTH -> health = statValue
+                        Stat.ATTACK -> attack = statValue
+                        Stat.DEFENSE -> defense = statValue
+                        Stat.SPEED -> speed = statValue
+                    }
+                }
             }
+
+            val typesArray = root.get(KEY_TYPES)?.asJsonArray
+            val typePrimary = typesArray?.let {
+                it[0]?.asJsonObject?.get(KEY_TYPE)?.asJsonObject?.get(KEY_NAME)?.asString?.let { Type.getTypeByName(it) }
+            } ?: run {
+                Type.NONE
+            }
+
+            val typeSecondary = if (typesArray?.size() == 2) {
+                typesArray.let {
+                    it[1]?.asJsonObject?.get(KEY_TYPE)?.asJsonObject?.get(KEY_NAME)?.asString?.let { Type.getTypeByName(it) }
+                } ?: run {
+                    Type.NONE
+                }
+            } else {
+                Type.NONE
+            }
+
+            Pokemon(id, name, health, attack, defense, speed, typePrimary, typeSecondary)
         }
-
-        val typePrimary: uk.co.jakebreen.pokecart.model.type.Type
-        val typeSecondary: uk.co.jakebreen.pokecart.model.type.Type
-
-        val typesArray = root.get(KEY_TYPES)?.asJsonArray!!
-        typePrimary = uk.co.jakebreen.pokecart.model.type.Type.getTypeByName(typesArray[0].asJsonObject.get(KEY_TYPE).asJsonObject.get(KEY_NAME).asString)!!
-        typeSecondary = if (typesArray.size() == 2)
-            uk.co.jakebreen.pokecart.model.type.Type.getTypeByName(typesArray[1].asJsonObject.get(KEY_TYPE).asJsonObject.get(KEY_NAME).asString)!!
-        else  uk.co.jakebreen.pokecart.model.type.Type.NONE
-
-
-        return Pokemon(id, name, health, attack, defense, speed, typePrimary, typeSecondary)
     }
 
 }

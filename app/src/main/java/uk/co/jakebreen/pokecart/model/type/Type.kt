@@ -92,7 +92,7 @@ enum class Type(val type: String) {
             }
         }
 
-        fun getTypeByResourceId(id: Int): Type? {
+        fun getTypeByResourceId(id: Int): Type {
             return when(id) {
                 R.id.type_normal -> NORMAL
                 R.id.type_fighting -> FIGHTING

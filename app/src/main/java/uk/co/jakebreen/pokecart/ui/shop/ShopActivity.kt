@@ -45,12 +45,10 @@ class ShopActivity : AppCompatActivity(), ShopAdapter.ShopViewModelClickListener
 
     private fun showViewModels(viewModels: List<ShopItemViewModel>) {
         shopAdapter.updateAll(viewModels)
-        rvShop.layoutManager!!.scrollToPosition(0)
+        rvShop.layoutManager?.apply { scrollToPosition(0) }
     }
 
-    override fun onShopViewModelClicked(view: View, viewModel: ShopItemViewModel) {
-
-    }
+    override fun onShopViewModelClicked(view: View, viewModel: ShopItemViewModel) { }
 
     private fun showFilterDialog() {
         val fragmentManager = supportFragmentManager
