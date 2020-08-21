@@ -61,6 +61,8 @@ class ShopItemViewModel(
             if (!hasAnimated) {
                 view.progress = 0
                 animateProgress(view, health)
+            } else {
+                view.progress = health
             }
             text.text = getStatTotal(health)
         }
@@ -71,6 +73,8 @@ class ShopItemViewModel(
             if (!hasAnimated) {
                 view.progress = 0
                 animateProgress(view, attack)
+            } else {
+                view.progress = attack
             }
             text.text = getStatTotal(attack)
         }
@@ -81,6 +85,8 @@ class ShopItemViewModel(
             if (!hasAnimated) {
                 view.progress = 0
                 animateProgress(view, defense)
+            } else {
+                view.progress = defense
             }
             text.text = getStatTotal(defense)
         }
@@ -91,6 +97,8 @@ class ShopItemViewModel(
             if (!hasAnimated) {
                 view.progress = 0
                 animateProgress(view, speed)
+            } else {
+                view.progress = speed
             }
             text.text = getStatTotal(speed)
         }

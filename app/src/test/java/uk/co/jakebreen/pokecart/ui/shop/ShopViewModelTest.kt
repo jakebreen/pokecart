@@ -7,10 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.verify
-import junit.framework.Assert.assertEquals
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.test.setMain
-import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -75,7 +72,7 @@ class ShopViewModelTest {
 
         argumentCaptor<List<ShopItemViewModel>>().apply {
             verify(itemsObserver).onChanged(capture())
-        }.run { assertEquals(createViewModels(pokemon.value!!), firstValue) }
+        }.run { assertEquals(pokemon.value?.let { createViewModels(it) }, firstValue) }
     }
 
     @Test
@@ -94,7 +91,7 @@ class ShopViewModelTest {
 
         argumentCaptor<List<ShopItemViewModel>>().apply {
             verify(itemsObserver).onChanged(capture())
-        }.run { assertEquals(createViewModels(pokemon.value!!), firstValue) }
+        }.run { assertEquals(pokemon.value?.let { createViewModels(it) }, firstValue) }
     }
 
     private fun createStatsMap(health: List<Int>, attack: List<Int>, defense: List<Int>, speed: List<Int>) = mapOf(

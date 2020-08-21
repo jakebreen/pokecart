@@ -26,7 +26,9 @@ class FilterDialogFragment: DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
-        dialog.window!!.setBackgroundDrawableResource(R.drawable.dialog_background)
+        dialog.window?.apply {
+            setBackgroundDrawableResource(R.drawable.dialog_background)
+        }
         return dialog
     }
 
@@ -48,16 +50,18 @@ class FilterDialogFragment: DialogFragment() {
         val checkedTypes = binding.cgFilterTypes.children
             .filterIsInstance(FilterChip::class.java)
             .map {
-                val type = Type.getTypeByResourceId(it.tag as Int)!!
+                val type = Type.getTypeByResourceId(it.tag as Int)
                 Pair(type, it.isChecked)
             }.toMap()
 
-        binding.viewModel!!.saveFilters(
-            checkedTypes,
-            binding.rsFilterHealth.values,
-            binding.rsFilterAttack.values,
-            binding.rsFilterDefense.values,
-            binding.rsFilterSpeed.values)
+        binding.viewModel?.also {
+            it.saveFilters(
+                checkedTypes,
+                binding.rsFilterHealth.values,
+                binding.rsFilterAttack.values,
+                binding.rsFilterDefense.values,
+                binding.rsFilterSpeed.values)
+        }
 
         dismiss()
     }
