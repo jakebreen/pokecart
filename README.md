@@ -1,4 +1,4 @@
-![header](https://github.com/Jakebreen/pokecart/images/heading-image.jpg)
+![header](https://github.com/Jakebreen/pokecart/blob/master/images/heading-image.jpg)
 
 # Overview
 Pokecart is my spin on the typical Poke-dex app. Featuring a complete list of the first 251 pokemon, filterable by their primary and secondary types and each of their four stats.
@@ -12,8 +12,8 @@ The core technologies featured:
 * Coroutines
 * Koin
 
-![listview](https://github.com/Jakebreen/pokecart/images/listview.gif) ![filter](https://github.com/Jakebreen/pokecart/images/filter.gif)
-![cart](https://github.com/Jakebreen/pokecart/images/cart.gif)
+![listview](https://github.com/Jakebreen/pokecart/blob/master/images/listview.gif) ![filter](https://github.com/Jakebreen/pokecart/blob/master/images/filter.gif)
+![cart](https://github.com/Jakebreen/pokecart/blob/master/images/cart.gif)
 
 # Architecture
 The 251 pokemon are supplied via api and added to the database upon the first-start of the application with access to the persistence layer abstracted through repositories.
@@ -22,4 +22,4 @@ The three core features, Shop, Filter and Cart and denoted with their own scopes
 
 Each viewmodel and repository has subsequent unit tests driving the overall development of the project with testing-in-mind!
 
-![architecture](https://github.com/Jakebreen/pokecart/images/achitecture.jpg)
+![architecture](https://github.com/Jakebreen/pokecart/blob/master/images/architecture.jpg)
