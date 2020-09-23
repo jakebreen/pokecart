@@ -12,7 +12,7 @@ The core technologies featured:
 * Coroutines
 * Koin
 
-![listview](https://github.com/Jakebreen/pokecart/blob/master/images/listview.gif) ![filter](https://github.com/Jakebreen/pokecart/blob/master/images/filter.gif)
+![listview](https://github.com/Jakebreen/pokecart/blob/master/images/listview.gif) &nbsp; ![filter](https://github.com/Jakebreen/pokecart/blob/master/images/filter.gif)
 ![cart](https://github.com/Jakebreen/pokecart/blob/master/images/cart.gif)
 
 # Architecture
