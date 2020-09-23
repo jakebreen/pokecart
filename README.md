@@ -13,7 +13,7 @@ The core technologies featured:
 * Coroutines
 * Koin
 
-![listview](https://github.com/Jakebreen/pokecart/blob/master/images/listview.gif) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![filter](https://github.com/Jakebreen/pokecart/blob/master/images/filter.gif) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![cart](https://github.com/Jakebreen/pokecart/blob/master/images/cart.gif)
+![listview](https://github.com/Jakebreen/pokecart/blob/master/images/listview.gif) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![filter](https://github.com/Jakebreen/pokecart/blob/master/images/filter.gif) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ![cart](https://github.com/Jakebreen/pokecart/blob/master/images/cart.gif)
 
 # Architecture
 The 251 pokemon are supplied via api and added to the database upon the first-start of the application with access to the persistence layer abstracted through repositories.
