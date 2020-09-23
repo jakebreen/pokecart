@@ -1,4 +1,4 @@
-![header](https://github.com/Jakebreen/pokecart/blob/master/images/heading-image.jpg)
+![header](https://github.com/Jakebreen/pokecart/blob/master/images/heading-image.png)
 
 # Overview
 Pokecart is my spin on the typical Poke-dex app. Featuring a complete list of the first 251 pokemon, filterable by their primary and secondary types and each of their four stats.
