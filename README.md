@@ -1,9 +1,10 @@
 ![header](https://github.com/Jakebreen/pokecart/blob/master/images/heading-image.png)
 
 # Overview
-Pokecart is my spin on the typical Poke-dex app. Featuring a complete list of the first 251 pokemon, filterable by their primary and secondary types and each of their four stats.
-A user can apply chosen filters to quickly find the pokemon they are looking for and add them to their shopping basket. Before purchase the user can review their order detailing the number of pokemon to purchase and the total expenditure as well as "poketax" applied on top.
-This project acts as my first introduction to LiveData, Coroutines and Koin. Working on this project has proven to be an insight into building an application without the usual dependencies on Dagger and RxJava that I regularly find myself accustomed implementing.
+Pokecart is my spin on the typical Poke-dex app. Featuring a complete list of the first 251 pokemon filterable by their primary and secondary types and each of their four stats.
+A user can apply chosen filters to quickly find the pokemon they are looking for and add them to their shopping basket. Before purchase the user can review their order detailing the number of pokemon they are about to purchase and the total expenditure as well as *"poketax"* applied on top.
+
+This project acts as my first introduction to LiveData, Coroutines and Koin. Working on this project has proven to be an insight into building an application without the usual dependencies on Dagger and RxJava that I regularly find myself accustomed to implementing.
 
 The core technologies featured:
 * Room
