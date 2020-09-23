@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="uk.co.jakebreen.pokecart.ui.cart.CartItemViewModel" />
+        <variable
+            name="viewModelClick"
+            type="uk.co.jakebreen.pokecart.ui.cart.CartAdapter.CartViewModelClickListener"/>
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_padding_8dp"
+        app:cardCornerRadius="@dimen/cart_item_card_corner_radius"
+        app:cardPreventCornerOverlap="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_padding_8dp">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="@dimen/cart_item_image_view_height"
+                android:layout_height="@dimen/cart_item_image_view_height"
+                app:image="@{viewModel.image}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <TextView
+                android:id="@+id/tvPokemonName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@{viewModel.name}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:hint="Pokemon Name" />
+
+            <TextView
+                android:id="@+id/tvTotalCost"
+                android:layout_width="@dimen/margin_padding_48dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_padding_8dp"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                app:cartCount="@{viewModel.count}"
+                app:cartPrice="@{viewModel.price}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:textAlignment="center"
+                tools:hint="$4" />
+
+            <Button
+                android:id="@+id/btMinus"
+                android:layout_width="@dimen/margin_padding_32dp"
+                android:layout_height="0dp"
+                android:padding="0dp"
+                android:text="-"
+                android:onClick="@{(view) -> viewModelClick.onCartItemDecreaseClicked(viewModel.id)}"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPokemonCount"
+                app:layout_constraintEnd_toStartOf="@id/tvPokemonCount"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintTop_toTopOf="@+id/tvPokemonCount" />
+
+            <TextView
+                android:id="@+id/tvPokemonCount"
+                android:layout_width="@dimen/margin_padding_48dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:textAppearance="@style/TextAppearance.AppCompat.Light.SearchResult.Title"
+                app:cartCount="@{viewModel.count}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPokemonName"
+                tools:hint="2" />
+
+            <Button
+                android:id="@+id/btPlus"
+                android:layout_width="@dimen/margin_padding_32dp"
+                android:layout_height="0dp"
+                android:padding="0dp"
+                android:text="+"
+                android:onClick="@{(view) -> viewModelClick.onCartItemIncreaseClicked(viewModel.id)}"
+                app:layout_constraintBottom_toBottomOf="@+id/tvPokemonCount"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toEndOf="@+id/tvPokemonCount"
+                app:layout_constraintTop_toTopOf="@+id/tvPokemonCount" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

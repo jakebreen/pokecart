@@ -10,6 +10,7 @@ data class Pokemon(
     @PrimaryKey
     val id: Int,
     val name: String,
+    val price: Int,
     val health: Int,
     val attack: Int,
     val defense: Int,

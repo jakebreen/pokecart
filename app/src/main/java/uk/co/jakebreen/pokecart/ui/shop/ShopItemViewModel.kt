@@ -1,4 +1,4 @@
-package uk.co.jakebreen.pokecart.ui.shop.item
+package uk.co.jakebreen.pokecart.ui.shop
 
 import android.animation.ObjectAnimator
 import android.net.Uri
@@ -10,13 +10,12 @@ import androidx.lifecycle.ViewModel
 import com.bumptech.glide.Glide
 import uk.co.jakebreen.pokecart.model.pokemon.Pokemon
 import uk.co.jakebreen.pokecart.model.type.Type
-import kotlin.random.Random
 
 class ShopItemViewModel(
     var id: Int,
     var name: String,
     var image: Uri,
-    var price: String,
+    var price: Int,
     var health: Int,
     var attack: Int,
     var defense: Int,
@@ -34,19 +33,20 @@ class ShopItemViewModel(
     }
 
     companion object {
-        fun from(pokemon: Pokemon, resources: ShopItemResources) = ShopItemViewModel(
-            id = pokemon.id,
-            name = pokemon.name.capitalize(),
-            image = resources.getImageUriById(pokemon.id),
-            price = "$".plus(price()),
-            health = pokemon.health,
-            attack = pokemon.attack,
-            defense = pokemon.defense,
-            speed = pokemon.speed,
-            typePrimary = pokemon.typePrimary,
-            typeSecondary = pokemon.typeSecondary,
-            hasAnimated = false
-        )
+        fun from(pokemon: Pokemon, resources: ShopItemResources) =
+            ShopItemViewModel(
+                id = pokemon.id,
+                name = pokemon.name.capitalize(),
+                image = resources.getImageUriById(pokemon.id),
+                price = pokemon.price,
+                health = pokemon.health,
+                attack = pokemon.attack,
+                defense = pokemon.defense,
+                speed = pokemon.speed,
+                typePrimary = pokemon.typePrimary,
+                typeSecondary = pokemon.typeSecondary,
+                hasAnimated = false
+            )
 
         @JvmStatic
         @BindingAdapter("image")
@@ -56,15 +56,27 @@ class ShopItemViewModel(
                 .into(view)
 
         @JvmStatic
+        @BindingAdapter("shopPrice")
+        fun bindPrice(textView: TextView, price: Int) {
+            textView.text = "$".plus(price)
+        }
+
+        @JvmStatic
         @BindingAdapter("health", "healthTotal", "hasAnimated")
         fun bindHealth(view: ProgressBar, health: Int, text: TextView, hasAnimated: Boolean) {
             if (!hasAnimated) {
                 view.progress = 0
-                animateProgress(view, health)
+                animateProgress(
+                    view,
+                    health
+                )
             } else {
                 view.progress = health
             }
-            text.text = getStatTotal(health)
+            text.text =
+                getStatTotal(
+                    health
+                )
         }
 
         @JvmStatic
@@ -72,11 +84,17 @@ class ShopItemViewModel(
         fun bindAttack(view: ProgressBar, attack :Int, text: TextView, hasAnimated: Boolean) {
             if (!hasAnimated) {
                 view.progress = 0
-                animateProgress(view, attack)
+                animateProgress(
+                    view,
+                    attack
+                )
             } else {
                 view.progress = attack
             }
-            text.text = getStatTotal(attack)
+            text.text =
+                getStatTotal(
+                    attack
+                )
         }
 
         @JvmStatic
@@ -84,11 +102,17 @@ class ShopItemViewModel(
         fun bindDefense(view: ProgressBar, defense: Int, text: TextView, hasAnimated: Boolean) {
             if (!hasAnimated) {
                 view.progress = 0
-                animateProgress(view, defense)
+                animateProgress(
+                    view,
+                    defense
+                )
             } else {
                 view.progress = defense
             }
-            text.text = getStatTotal(defense)
+            text.text =
+                getStatTotal(
+                    defense
+                )
         }
 
         @JvmStatic
@@ -96,11 +120,17 @@ class ShopItemViewModel(
         fun bindSpeed(view: ProgressBar, speed: Int, text: TextView, hasAnimated: Boolean) {
             if (!hasAnimated) {
                 view.progress = 0
-                animateProgress(view, speed)
+                animateProgress(
+                    view,
+                    speed
+                )
             } else {
                 view.progress = speed
             }
-            text.text = getStatTotal(speed)
+            text.text =
+                getStatTotal(
+                    speed
+                )
         }
 
         @JvmStatic
@@ -117,8 +147,6 @@ class ShopItemViewModel(
                 .load(Type.getResourceDrawableByType(type))
                 .fitCenter()
                 .into(view)
-
-        private fun price(): Int = Random.nextInt(2, 8)
 
         private fun animateProgress(view: ProgressBar, value: Int) =
             ObjectAnimator.ofInt(view, "progress", value)

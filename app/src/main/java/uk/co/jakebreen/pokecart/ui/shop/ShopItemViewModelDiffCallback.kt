@@ -1,4 +1,4 @@
-package uk.co.jakebreen.pokecart.ui.shop.item
+package uk.co.jakebreen.pokecart.ui.shop
 
 import androidx.recyclerview.widget.DiffUtil
 

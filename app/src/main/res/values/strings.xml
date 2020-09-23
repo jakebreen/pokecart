@@ -21,4 +21,13 @@
     <string name="filter_speed">Speed:</string>
     <string name="filter_apply_filters">Apply Filters</string>
 
+    <!--  cart dialog  -->
+    <string name="no_pokemon_in_your_basket">No Pokemon in your basket!</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="poketax">Poke-tax</string>
+    <string name="total">Total</string>
+    <string name="buy_pokemon">Buy Pokemon</string>
+    <string name="clear_pokemon">Clear</string>
+    <string name="review_your_order">Review Your Order</string>
+
 </resources>

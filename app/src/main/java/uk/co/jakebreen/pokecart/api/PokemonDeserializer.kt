@@ -7,6 +7,7 @@ import com.google.gson.JsonElement
 import uk.co.jakebreen.pokecart.model.pokemon.Pokemon
 import uk.co.jakebreen.pokecart.model.stat.Stat
 import uk.co.jakebreen.pokecart.model.type.Type
+import kotlin.random.Random
 
 
 class PokemonDeserializer: JsonDeserializer<Pokemon> {
@@ -65,7 +66,8 @@ class PokemonDeserializer: JsonDeserializer<Pokemon> {
                 Type.NONE
             }
 
-            Pokemon(id, name, health, attack, defense, speed, typePrimary, typeSecondary)
+            val price = Random.nextInt(2, 8)
+            Pokemon(id, name, price, health, attack, defense, speed, typePrimary, typeSecondary)
         }
     }
 

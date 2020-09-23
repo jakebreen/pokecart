@@ -1,11 +1,6 @@
 package uk.co.jakebreen.pokecart.model.pokemon
 
-import org.koin.dsl.module
 import uk.co.jakebreen.pokecart.model.type.Type
-
-val repositoryModule = module {
-    factory { PokemonRepository(get()) }
-}
 
 class PokemonRepository(private val pokemonDao: PokemonDao) {
 
@@ -20,5 +15,7 @@ class PokemonRepository(private val pokemonDao: PokemonDao) {
         defenseMin = defense.first, defenseMax = defense.second,
         speedMin = speed.first, speedMax = speed.second
     )
+
+    fun getPokemonById(id: Int) = pokemonDao.getPokemonById(id)
 
 }

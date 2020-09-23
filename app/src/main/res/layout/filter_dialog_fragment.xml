@@ -28,9 +28,9 @@
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8dp"
-                app:chipSpacingVertical="@dimen/dimen_8dp"
-                app:chipSpacingHorizontal="@dimen/dimen_8dp"
+                android:layout_marginTop="@dimen/margin_padding_8dp"
+                app:chipSpacingVertical="@dimen/margin_padding_8dp"
+                app:chipSpacingHorizontal="@dimen/margin_padding_8dp"
                 app:layout_constraintTop_toBottomOf="@+id/tvFilterTypes"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -52,7 +52,7 @@
                 app:trackColorActive="@android:color/holo_red_light"
                 app:trackColorInactive="@color/health_secondary"
                 app:thumbColor="@android:color/holo_red_light"
-                android:layout_marginTop="@dimen/dimen_8dp"
+                android:layout_marginTop="@dimen/margin_padding_8dp"
                 app:layout_constraintTop_toBottomOf="@+id/cgFilterTypes"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
