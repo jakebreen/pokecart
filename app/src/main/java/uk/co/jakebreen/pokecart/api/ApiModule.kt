@@ -37,6 +37,5 @@ fun retrofit(client: OkHttpClient, pokemonConverterFactory: GsonConverterFactory
         .baseUrl("https://pokeapi.co/api/v2/")
         .client(client)
         .addConverterFactory(pokemonConverterFactory)
-//        .addConverterFactory(GsonConverterFactory.create())
         .build()
 }

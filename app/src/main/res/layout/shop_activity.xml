@@ -29,9 +29,9 @@
                 android:id="@+id/cgCart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8dp"
-                app:chipMinTouchTargetSize="@dimen/dimen_0dp"
-                android:layout_marginStart="@dimen/dimen_8dp"
+                android:layout_marginTop="@dimen/margin_padding_8dp"
+                app:chipMinTouchTargetSize="0dp"
+                android:layout_marginStart="@dimen/margin_padding_8dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -40,12 +40,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvShop"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_0dp"
+            android:layout_height="0dp"
             android:requiresFadingEdge="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layoutCart" />
+            app:layout_constraintTop_toBottomOf="@+id/layoutCart"
+            tools:listitem="@layout/shop_item"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

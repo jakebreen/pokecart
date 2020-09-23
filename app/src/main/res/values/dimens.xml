@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="dimen_0dp">0dp</dimen>
-    <dimen name="dimen_4dp">4dp</dimen>
-    <dimen name="dimen_8dp">8dp</dimen>
-    <dimen name="dimen_12dp">12dp</dimen>
-    <dimen name="dimen_16dp">16dp</dimen>
-    <dimen name="dimen_24dp">24dp</dimen>
+    <dimen name="margin_padding_4dp">4dp</dimen>
+    <dimen name="margin_padding_8dp">8dp</dimen>
+    <dimen name="margin_padding_12dp">12dp</dimen>
+    <dimen name="margin_padding_16dp">16dp</dimen>
+    <dimen name="margin_padding_24dp">24dp</dimen>
+    <dimen name="margin_padding_32dp">32dp</dimen>
+    <dimen name="margin_padding_48dp">48dp</dimen>
 
     <!--  shop activity  -->
     <dimen name="shop_image_width_height">36dp</dimen>
@@ -17,5 +18,10 @@
     <dimen name="shop_item_image_view_height">120dp</dimen>
     <dimen name="shop_item_stats_text_width">24dp</dimen>
     <dimen name="shop_item_stats_total_text_width">48dp</dimen>
+
+    <!--  cart item  -->
+    <dimen name="cart_item_card_corner_radius">8dp</dimen>
+    <dimen name="cart_item_image_view_height">64dp</dimen>
+    <dimen name="cart_max_height">320dp</dimen>
 
 </resources>

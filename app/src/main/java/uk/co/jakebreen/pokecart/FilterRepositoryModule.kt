@@ -7,7 +7,7 @@ import uk.co.jakebreen.pokecart.model.filter.FilterRepository
 import uk.co.jakebreen.pokecart.model.stat.Stat
 import uk.co.jakebreen.pokecart.model.type.Type
 
-val filterModule = module {
+val filterRepositoryModule = module {
     single(named("types")) { types }
     single(named("stats")) { stats }
     factory { getFilterRepository(get(named("types")), get(named("stats"))) }

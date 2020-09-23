@@ -12,7 +12,7 @@ class FilterRepository(private val types: MutableLiveData<Map<Type, Boolean>>,
     fun getFilterTypes() = types
 
     @VisibleForTesting
-    fun matchEnabledTypes(types: Map<Type, Boolean>) = types.filterValues { it }.map { it.key }.toList()
+    fun matchFilteredTypes(types: Map<Type, Boolean>) = types.filterValues { it }.map { it.key }.toList()
 
     fun getFilterStats() = stats
 
@@ -26,8 +26,8 @@ class FilterRepository(private val types: MutableLiveData<Map<Type, Boolean>>,
     }
 
     private var updates = MediatorLiveData<Update>().apply {
-        addSource(types) { value = Update(matchEnabledTypes(types.value ?: mapOf()), stats.value ?: mapOf()) }
-        addSource(stats) { value = Update(matchEnabledTypes(types.value ?: mapOf()), stats.value ?: mapOf()) }
+        addSource(types) { value = Update(matchFilteredTypes(types.value ?: mapOf()), stats.value ?: mapOf()) }
+        addSource(stats) { value = Update(matchFilteredTypes(types.value ?: mapOf()), stats.value ?: mapOf()) }
     }
 
     data class Update(val typesList: List<Type>, val statsMap: Map<Stat, Pair<Int, Int>>)

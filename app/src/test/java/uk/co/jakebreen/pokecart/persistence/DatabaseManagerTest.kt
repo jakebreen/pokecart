@@ -20,7 +20,6 @@ import uk.co.jakebreen.pokecart.model.pokemon.Pokemon
 import uk.co.jakebreen.pokecart.model.pokemon.PokemonDao
 import uk.co.jakebreen.pokecart.model.type.Type
 import uk.co.jakebreen.pokecart.persistence.DatabaseManager.Companion.TOTAL_POKEMON
-import kotlin.random.Random
 
 class DatabaseManagerTest {
 
@@ -30,9 +29,9 @@ class DatabaseManagerTest {
     @Mock lateinit var pokemonDao: PokemonDao
     @Mock lateinit var pokemonApi: PokemonApi
 
-    private val pokemonOne = Pokemon(1, "pokemonOne", Random.nextInt(), Random.nextInt(), Random.nextInt(), Random.nextInt(), Type.GROUND, Type.FIRE)
-    private val pokemonTwo = Pokemon(2, "pokemonTwo", Random.nextInt(), Random.nextInt(), Random.nextInt(), Random.nextInt(), Type.NORMAL, Type.POISON)
-    private val pokemonThree = Pokemon(3, "pokemonThree", Random.nextInt(), Random.nextInt(), Random.nextInt(), Random.nextInt(), Type.GROUND, Type.BUG)
+    private val pokemonOne = Pokemon(1, "pokemonOne", 0, 100, 100, 100, 100, Type.GROUND, Type.FIRE)
+    private val pokemonTwo = Pokemon(2, "pokemonTwo", 0, 100, 100, 100, 100, Type.NORMAL, Type.POISON)
+    private val pokemonThree = Pokemon(3, "pokemonThree", 0, 100, 100, 100, 100, Type.GROUND, Type.BUG)
 
     lateinit var databaseManager: DatabaseManager
 

@@ -1,8 +1,8 @@
-package uk.co.jakebreen.pokecart.ui.shop.item
+package uk.co.jakebreen.pokecart.ui.cart
 
 import android.net.Uri
 
-class ShopItemResources {
+class CartItemResources {
 
     fun getImageUriById(id: Int): Uri {
         return Uri.Builder()

@@ -75,7 +75,7 @@ class FilterRepositoryTest {
             put(Type.FAIRY, true)
             put(Type.GROUND, false)
         }.let {
-            repository.matchEnabledTypes(it)
+            repository.matchFilteredTypes(it)
         }.also {
             assertTrue(it.contains(Type.FIGHTING))
             assertFalse(it.contains(Type.BUG))
@@ -172,7 +172,7 @@ class FilterRepositoryTest {
             put(Type.GROUND, false)
         }.also {
             repository.postFilterTypes(it)
-        }.let { repository.matchEnabledTypes(it) }
+        }.let { repository.matchFilteredTypes(it) }
 
         val mapStats = mutableMapOf<Stat, Pair<Int, Int>>().apply {
             put(Stat.HEALTH, Pair(50, 100))

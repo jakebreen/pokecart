@@ -10,11 +10,11 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
 import uk.co.jakebreen.pokecart.api.apiModule
-import uk.co.jakebreen.pokecart.model.pokemon.repositoryModule
 import uk.co.jakebreen.pokecart.persistence.DatabaseManager
 import uk.co.jakebreen.pokecart.persistence.databaseModule
+import uk.co.jakebreen.pokecart.ui.cart.cartDialogModule
 import uk.co.jakebreen.pokecart.ui.filter.filterDialogModule
-import uk.co.jakebreen.pokecart.ui.shop.shopModule
+import uk.co.jakebreen.pokecart.ui.shop.shopActivityModule
 
 class App: Application() {
 
@@ -35,16 +35,18 @@ class App: Application() {
             modules(listOf(
                 databaseModule,
                 apiModule,
-                repositoryModule,
-                shopModule,
-                filterModule,
-                filterDialogModule))
+                pokemonRepositoryModule,
+                shopActivityModule,
+                filterRepositoryModule,
+                filterDialogModule,
+                cartRepositoryModule,
+                cartDialogModule))
         }
 
-        startDatabase()
+        initialiseDatabase()
     }
 
-    private fun startDatabase() {
+    private fun initialiseDatabase() {
         CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
             databaseManager.onStart()
         }

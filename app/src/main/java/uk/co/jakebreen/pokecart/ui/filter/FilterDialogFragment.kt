@@ -15,14 +15,19 @@ import uk.co.jakebreen.pokecart.R
 import uk.co.jakebreen.pokecart.databinding.FilterDialogFragmentBinding
 import uk.co.jakebreen.pokecart.model.stat.Stat
 import uk.co.jakebreen.pokecart.model.type.Type
+import uk.co.jakebreen.pokecart.ui.shop.ShopActivity
 
 class FilterDialogFragment: DialogFragment() {
 
     private val scope = getKoin().getOrCreateScope("filter_scope_id", named<FilterDialogFragment>())
-
     private val filterViewModel : FilterDialogViewModel by scope.inject()
 
     private lateinit var binding: FilterDialogFragmentBinding
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(STYLE_NO_TITLE, R.style.AppTheme_Dialog)
+    }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = super.onCreateDialog(savedInstanceState)
@@ -42,7 +47,12 @@ class FilterDialogFragment: DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         filterViewModel.types.observe(viewLifecycleOwner, Observer { showFilterChips(it) })
-        filterViewModel.stats.observe(viewLifecycleOwner, Observer { applyStats(it) })
+        filterViewModel.stats.observe(viewLifecycleOwner, Observer { statsMap ->
+            statsMap[Stat.HEALTH]?.also { healthPair ->   showHealthStats(healthPair.first, healthPair.second) }
+            statsMap[Stat.ATTACK]?.also { attackPair ->   showAttackStats(attackPair.first, attackPair.second) }
+            statsMap[Stat.DEFENSE]?.also { defensePair -> showDefenseStats(defensePair.first, defensePair.second) }
+            statsMap[Stat.SPEED]?.also { speedPair ->     showSpeedStats(speedPair.first, speedPair.second) }
+        })
         binding.btApplyFilters.setOnClickListener { onSaveFilters() }
     }
 
@@ -63,7 +73,9 @@ class FilterDialogFragment: DialogFragment() {
                 binding.rsFilterSpeed.values)
         }
 
-        dismiss()
+        (activity as ShopActivity).setShouldResetAdapter(true).also {
+            dismiss()
+        }
     }
 
     private fun showFilterChips(types: Map<Type, Boolean>) {
@@ -89,29 +101,6 @@ class FilterDialogFragment: DialogFragment() {
 
     private fun showSpeedStats(min: Int, max: Int) {
         binding.rsFilterSpeed.setValues(min.toFloat(), max.toFloat())
-    }
-
-    private fun applyStats(map: Map<Stat, Pair<Int, Int>>) {
-        map.forEach {
-            when (it.key) {
-                Stat.HEALTH -> showHealthStats(
-                    it.value.first,
-                    it.value.second
-                )
-                Stat.ATTACK -> showAttackStats(
-                    it.value.first,
-                    it.value.second
-                )
-                Stat.DEFENSE -> showDefenseStats(
-                    it.value.first,
-                    it.value.second
-                )
-                Stat.SPEED -> showSpeedStats(
-                    it.value.first,
-                    it.value.second
-                )
-            }
-        }
     }
 
 }
