@@ -7,10 +7,11 @@
         <variable name="viewModel" type="uk.co.jakebreen.pokecart.ui.shop.ShopViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.constraintlayout.motion.widget.MotionLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.shop.ShopActivity">
+        tools:context=".ui.shop.ShopActivity"
+        app:layoutDescription="@xml/shop_activity_scene">
 
         <include layout="@layout/toolbar"
             android:id="@+id/toolbar_include"
@@ -48,6 +49,6 @@
             app:layout_constraintTop_toBottomOf="@+id/layoutCart"
             tools:listitem="@layout/shop_item"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 
 </layout>
