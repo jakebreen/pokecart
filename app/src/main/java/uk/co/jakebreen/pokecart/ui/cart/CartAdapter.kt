@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import uk.co.jakebreen.pokecart.R
 import uk.co.jakebreen.pokecart.databinding.CartItemBinding
 
-class CartAdapter(private val viewModels: MutableList<CartItemViewModel>,
+class CartAdapter(private val items: MutableList<CartItem>,
                   private val clickListener: CartViewModelClickListener
 ): RecyclerView.Adapter<CartAdapter.CartViewHolder>() {
 
@@ -17,28 +17,28 @@ class CartAdapter(private val viewModels: MutableList<CartItemViewModel>,
         return CartViewHolder(binding)
     }
 
-    override fun getItemCount() = viewModels.size
+    override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: CartViewHolder, position: Int) {
-        holder.bind(viewModels[position], clickListener)
+        holder.bind(items[position], clickListener)
     }
 
     class CartViewHolder(private val binding: CartItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(viewModel: CartItemViewModel, clickListener: CartViewModelClickListener) {
-            binding.viewModel = viewModel
+        fun bind(item: CartItem, clickListener: CartViewModelClickListener) {
+            binding.viewModel = item
             binding.viewModelClick = clickListener
             binding.executePendingBindings()
         }
     }
 
-    fun updateAll(updated: List<CartItemViewModel>) {
+    fun updateAll(updated: List<CartItem>) {
         val diffResult = DiffUtil.calculateDiff(
             CartItemViewModelDiffCallback(
-                viewModels,
+                items,
                 updated
             ), false)
-        viewModels.clear()
-        viewModels.addAll(updated)
+        items.clear()
+        items.addAll(updated)
         diffResult.dispatchUpdatesTo(this)
     }
 

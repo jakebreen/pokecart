@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="uk.co.jakebreen.pokecart.ui.cart.CartItemViewModel" />
+            type="uk.co.jakebreen.pokecart.ui.cart.CartItem" />
         <variable
             name="viewModelClick"
             type="uk.co.jakebreen.pokecart.ui.cart.CartAdapter.CartViewModelClickListener"/>

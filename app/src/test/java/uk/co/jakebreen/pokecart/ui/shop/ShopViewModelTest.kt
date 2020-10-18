@@ -22,7 +22,7 @@ import uk.co.jakebreen.pokecart.model.pokemon.Pokemon
 import uk.co.jakebreen.pokecart.model.pokemon.PokemonRepository
 import uk.co.jakebreen.pokecart.model.stat.Stat
 import uk.co.jakebreen.pokecart.model.type.Type
-import uk.co.jakebreen.pokecart.ui.cart.CartItemViewModel
+import uk.co.jakebreen.pokecart.ui.cart.CartItem
 
 class ShopViewModelTest {
 
@@ -35,12 +35,12 @@ class ShopViewModelTest {
     @Mock lateinit var cartRepository: CartRepository
     @Mock lateinit var cartItemCountObserver: Observer<Int>
 
-    @Mock lateinit var cartItemOne: CartItemViewModel
-    @Mock lateinit var cartItemTwo: CartItemViewModel
+    @Mock lateinit var cartItemOne: CartItem
+    @Mock lateinit var cartItemTwo: CartItem
 
     private val pokemon = MutableLiveData<List<Pokemon>>()
     private val updates = MediatorLiveData<Update>()
-    private val cart = MediatorLiveData<List<CartItemViewModel>>()
+    private val cart = MediatorLiveData<Set<CartItem>>()
 
     private val pokemonOne = Pokemon(1, "pokemonOne", 0, 100, 100, 100, 100, Type.GROUND, Type.FIRE)
     private val pokemonTwo = Pokemon(2, "pokemonTwo", 0, 100, 100, 100, 100, Type.NORMAL, Type.POISON)
@@ -105,7 +105,7 @@ class ShopViewModelTest {
     @Test
     fun `givenPokemonAddedToCart thenObserveSingleItemInCart`() {
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonOne.id)).thenReturn(pokemonOne)
-        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(listOf(cartItemOne))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(setOf(cartItemOne))  }
         Mockito.`when`(cartItemOne.count).thenReturn(1)
 
         viewModel.addPokemonToCart(pokemonOne.id)
@@ -118,7 +118,7 @@ class ShopViewModelTest {
     @Test
     fun `givenOneThenTwoMorePokemonAddedToCart thenObserveSingleItemInCart`() {
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonOne.id)).thenReturn(pokemonOne)
-        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(listOf(cartItemOne))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(setOf(cartItemOne))  }
         Mockito.`when`(cartItemOne.count).thenReturn(1)
 
         viewModel.addPokemonToCart(pokemonOne.id)
@@ -128,7 +128,7 @@ class ShopViewModelTest {
         }.run { assertEquals(1, firstValue) }
 
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonTwo.id)).thenReturn(pokemonTwo)
-        Mockito.`when`(cartRepository.addCartItem(pokemonTwo)).thenAnswer { cart.postValue(listOf(cartItemOne, cartItemTwo))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonTwo)).thenAnswer { cart.postValue(setOf(cartItemOne, cartItemTwo))  }
         Mockito.`when`(cartItemTwo.count).thenReturn(1)
 
         viewModel.addPokemonToCart(pokemonTwo.id)
@@ -140,7 +140,7 @@ class ShopViewModelTest {
 
     @Test
     fun `givenCartEmpty thenObserveNoItemsInCart`() {
-        cart.postValue(listOf())
+        cart.postValue(emptySet())
 
         argumentCaptor<Int>().apply {
             verify(cartItemCountObserver).onChanged(capture())
@@ -150,7 +150,7 @@ class ShopViewModelTest {
     @Test
     fun `givePokemonRemovedFromCart thenObserveNoItemsInCart`() {
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonOne.id)).thenReturn(pokemonOne)
-        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(listOf(cartItemOne, cartItemTwo))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(setOf(cartItemOne, cartItemTwo))  }
         Mockito.`when`(cartItemOne.count).thenReturn(1)
         Mockito.`when`(cartItemTwo.count).thenReturn(1)
 
@@ -160,7 +160,7 @@ class ShopViewModelTest {
             verify(cartItemCountObserver).onChanged(capture())
         }.run { assertEquals(2, firstValue) }
 
-        cart.postValue(listOf())
+        cart.postValue(emptySet())
 
         argumentCaptor<Int>().apply {
             verify(cartItemCountObserver, times(2)).onChanged(capture())
@@ -170,7 +170,7 @@ class ShopViewModelTest {
     @Test
     fun `givenTwoOfTheSamePokemonAddedToCart thenObserveTwoItemsInCart`() {
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonOne.id)).thenReturn(pokemonOne)
-        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(listOf(cartItemOne))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(setOf(cartItemOne))  }
         Mockito.`when`(cartItemOne.count).thenReturn(2)
 
         viewModel.addPokemonToCart(pokemonOne.id)
@@ -183,7 +183,7 @@ class ShopViewModelTest {
     @Test
     fun `givenFiveOfTheSamePokemonAddedToCart thenObserveFiveItemsInCart`() {
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonOne.id)).thenReturn(pokemonOne)
-        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(listOf(cartItemOne))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(setOf(cartItemOne))  }
         Mockito.`when`(cartItemOne.count).thenReturn(5)
 
         viewModel.addPokemonToCart(pokemonOne.id)
@@ -196,7 +196,7 @@ class ShopViewModelTest {
     @Test
     fun `givenTwoOfOnePokemonAndThreeOfAnotherAddedToCart thenObserveFiveItemsInCart`() {
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonOne.id)).thenReturn(pokemonOne)
-        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(listOf(cartItemOne, cartItemTwo))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(setOf(cartItemOne, cartItemTwo))  }
         Mockito.`when`(cartItemOne.count).thenReturn(2)
         Mockito.`when`(cartItemTwo.count).thenReturn(3)
 

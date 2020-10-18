@@ -58,8 +58,8 @@ class CartDialogFragment: DialogFragment(), CartAdapter.CartViewModelClickListen
         })
     }
 
-    private fun showViewModels(viewModels: List<CartItemViewModel>) {
-        cartAdapter.updateAll(viewModels)
+    private fun showViewModels(items: List<CartItem>) {
+        cartAdapter.updateAll(items)
     }
 
     override fun onCartItemIncreaseClicked(id: Int) {
