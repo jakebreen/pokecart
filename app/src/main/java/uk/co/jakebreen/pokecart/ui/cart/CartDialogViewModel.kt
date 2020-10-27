@@ -2,6 +2,7 @@ package uk.co.jakebreen.pokecart.ui.cart
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import uk.co.jakebreen.pokecart.model.cart.CartRepository

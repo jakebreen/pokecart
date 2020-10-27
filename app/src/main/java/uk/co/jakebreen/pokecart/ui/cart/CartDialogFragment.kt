@@ -21,7 +21,7 @@ import uk.co.jakebreen.pokecart.databinding.CartDialogFragmentBinding
 class CartDialogFragment: DialogFragment(), CartAdapter.CartViewModelClickListener {
 
     private val scope = getKoin().getOrCreateScope("cart_scope_id", named<CartDialogFragment>())
-    private val cartDialogViewModel: CartDialogViewModel by scope.inject()
+    private val viewModel: CartDialogViewModel by scope.inject()
 
     private lateinit var binding: CartDialogFragmentBinding
     private val cartAdapter = CartAdapter(mutableListOf(), this)
@@ -42,8 +42,14 @@ class CartDialogFragment: DialogFragment(), CartAdapter.CartViewModelClickListen
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.cart_dialog_fragment, container, false)
         binding.lifecycleOwner = this
-        binding.viewModel = cartDialogViewModel
+        binding.viewModel = viewModel
+        binding.btBuyPokemon.setOnClickListener { buyCartPokemon() }
         return binding.root
+    }
+
+    private fun buyCartPokemon() {
+        viewModel.clear()
+        dismiss()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,20 +59,20 @@ class CartDialogFragment: DialogFragment(), CartAdapter.CartViewModelClickListen
             adapter = cartAdapter
         }
 
-        cartDialogViewModel.observeUpdates().observe(viewLifecycleOwner, Observer {
+        viewModel.observeUpdates().observe(viewLifecycleOwner, Observer {
             it.toList().also { showViewModels(it) }
         })
     }
 
-    private fun showViewModels(viewModels: List<CartItemViewModel>) {
-        cartAdapter.updateAll(viewModels)
+    private fun showViewModels(items: List<CartItem>) {
+        cartAdapter.updateAll(items)
     }
 
     override fun onCartItemIncreaseClicked(id: Int) {
-        CoroutineScope(Dispatchers.IO).launch { cartDialogViewModel.addCartItem(id) }
+        CoroutineScope(Dispatchers.IO).launch { viewModel.addCartItem(id) }
     }
 
     override fun onCartItemDecreaseClicked(id: Int) {
-        CoroutineScope(Dispatchers.IO).launch { cartDialogViewModel.removeCartItem(id) }
+        CoroutineScope(Dispatchers.IO).launch { viewModel.removeCartItem(id) }
     }
 }

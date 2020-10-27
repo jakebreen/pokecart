@@ -26,16 +26,16 @@ class CartDialogViewModelTest {
 
     @Mock lateinit var cartRepository: CartRepository
     @Mock lateinit var pokemonRepository: PokemonRepository
-    @Mock lateinit var cartViewModelsObserver: Observer<List<CartItemViewModel>>
+    @Mock lateinit var cartItemViewModelsObserver: Observer<Set<CartItem>>
     @Mock lateinit var cartEmptyObserver: Observer<Boolean>
     @Mock lateinit var cartSubtotalObserver: Observer<Int>
     @Mock lateinit var cartPoketaxObserver: Observer<Double>
     @Mock lateinit var cartTotalObserver: Observer<Double>
 
-    @Mock lateinit var cartItemOne: CartItemViewModel
-    @Mock lateinit var cartItemTwo: CartItemViewModel
+    @Mock lateinit var cartItemOne: CartItem
+    @Mock lateinit var cartItemTwo: CartItem
 
-    private val cart = MediatorLiveData<List<CartItemViewModel>>()
+    private val cart = MediatorLiveData<Set<CartItem>>()
 
     private val pokemonOne = Pokemon(1, "pokemonOne", 0, 100, 100, 100, 100, Type.GROUND, Type.FIRE)
     private val pokemonTwo = Pokemon(2, "pokemonTwo", 0, 100, 100, 100, 100, Type.NORMAL, Type.POISON)
@@ -51,7 +51,7 @@ class CartDialogViewModelTest {
 
         viewModel = CartDialogViewModel(cartRepository, pokemonRepository)
 
-        viewModel.observeUpdates().observeForever(cartViewModelsObserver)
+        viewModel.observeUpdates().observeForever(cartItemViewModelsObserver)
         viewModel.observeCartEmpty().observeForever(cartEmptyObserver)
         viewModel.observeSubtotal().observeForever(cartSubtotalObserver)
         viewModel.observePoketax().observeForever(cartPoketaxObserver)
@@ -61,67 +61,67 @@ class CartDialogViewModelTest {
     @Test
     fun `givenPokemonAddedToCart thenObserveSingleViewModelInCart`() {
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonOne.id)).thenReturn(pokemonOne)
-        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(listOf(cartItemOne))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(setOf(cartItemOne))  }
 
         viewModel.addCartItem(pokemonOne.id)
 
-        argumentCaptor<List<CartItemViewModel>>().apply {
-            verify(cartViewModelsObserver).onChanged(capture())
-        }.run { Assert.assertEquals(listOf(cartItemOne), firstValue) }
+        argumentCaptor<Set<CartItem>>().apply {
+            verify(cartItemViewModelsObserver).onChanged(capture())
+        }.run { Assert.assertEquals(setOf(cartItemOne), firstValue) }
     }
 
     @Test
     fun `givenTwoPokemonAddedToCart thenObserveTwoViewModelsInCart`() {
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonOne.id)).thenReturn(pokemonOne)
-        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(listOf(cartItemOne))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonOne)).thenAnswer { cart.postValue(setOf(cartItemOne))  }
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonTwo.id)).thenReturn(pokemonTwo)
-        Mockito.`when`(cartRepository.addCartItem(pokemonTwo)).thenAnswer { cart.postValue(listOf(cartItemOne, cartItemTwo))  }
+        Mockito.`when`(cartRepository.addCartItem(pokemonTwo)).thenAnswer { cart.postValue(setOf(cartItemOne, cartItemTwo))  }
 
         viewModel.addCartItem(pokemonOne.id)
 
-        argumentCaptor<List<CartItemViewModel>>().apply {
-            verify(cartViewModelsObserver).onChanged(capture())
-        }.run { Assert.assertEquals(listOf(cartItemOne), firstValue) }
+        argumentCaptor<Set<CartItem>>().apply {
+            verify(cartItemViewModelsObserver).onChanged(capture())
+        }.run { Assert.assertEquals(setOf(cartItemOne), firstValue) }
 
         viewModel.addCartItem(pokemonTwo.id)
 
-        argumentCaptor<List<CartItemViewModel>>().apply {
-            verify(cartViewModelsObserver, times(2)).onChanged(capture())
-        }.run { Assert.assertEquals(listOf(cartItemOne, cartItemTwo), secondValue) }
+        argumentCaptor<Set<CartItem>>().apply {
+            verify(cartItemViewModelsObserver, times(2)).onChanged(capture())
+        }.run { Assert.assertEquals(setOf(cartItemOne, cartItemTwo), secondValue) }
     }
 
     @Test
     fun `givenPokemonRemoveFromCart thenObserveNoViewModelsInCart`() {
         Mockito.`when`(pokemonRepository.getPokemonById(pokemonOne.id)).thenReturn(pokemonOne)
-        Mockito.`when`(cartRepository.removeCartItem(pokemonOne)).thenAnswer { cart.postValue(listOf())  }
+        Mockito.`when`(cartRepository.removeCartItem(pokemonOne)).thenAnswer { cart.postValue(setOf())  }
 
         viewModel.removeCartItem(pokemonOne.id)
 
-        argumentCaptor<List<CartItemViewModel>>().apply {
-            verify(cartViewModelsObserver).onChanged(capture())
-        }.run { Assert.assertEquals(emptyList<CartItemViewModel>(), firstValue) }
+        argumentCaptor<Set<CartItem>>().apply {
+            verify(cartItemViewModelsObserver).onChanged(capture())
+        }.run { Assert.assertEquals(emptySet<CartItem>(), firstValue) }
     }
 
     @Test
     fun `givenPokemonInCart whenClearingCart thenObserveNoViewModelsInCart`() {
-        Mockito.`when`(cartRepository.clear()).thenAnswer { cart.postValue(emptyList())  }
+        Mockito.`when`(cartRepository.clear()).thenAnswer { cart.postValue(emptySet())  }
 
-        cart.postValue(listOf(cartItemOne, cartItemTwo))
+        cart.postValue(setOf(cartItemOne, cartItemTwo))
 
-        argumentCaptor<List<CartItemViewModel>>().apply {
-            verify(cartViewModelsObserver).onChanged(capture())
-        }.run { Assert.assertEquals(listOf(cartItemOne, cartItemTwo), firstValue) }
+        argumentCaptor<Set<CartItem>>().apply {
+            verify(cartItemViewModelsObserver).onChanged(capture())
+        }.run { Assert.assertEquals(setOf(cartItemOne, cartItemTwo), firstValue) }
 
         viewModel.clear()
 
-        argumentCaptor<List<CartItemViewModel>>().apply {
-            verify(cartViewModelsObserver, times(2)).onChanged(capture())
-        }.run { Assert.assertEquals(emptyList<CartItemViewModel>(), secondValue) }
+        argumentCaptor<Set<CartItem>>().apply {
+            verify(cartItemViewModelsObserver, times(2)).onChanged(capture())
+        }.run { Assert.assertEquals(setOf<CartItem>(), secondValue) }
     }
 
     @Test
     fun `givenNoPokemonInCart thenObserveCartEmpty`() {
-        cart.postValue(emptyList())
+        cart.postValue(emptySet())
 
         argumentCaptor<Boolean>().apply {
             verify(cartEmptyObserver).onChanged(capture())
@@ -130,7 +130,7 @@ class CartDialogViewModelTest {
 
     @Test
     fun `givenPokemonInCart thenObserveCartNotEmpty`() {
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Boolean>().apply {
             verify(cartEmptyObserver).onChanged(capture())
@@ -139,13 +139,13 @@ class CartDialogViewModelTest {
 
     @Test
     fun `givenNoPokemonInCart whenPokemonAdded thenObserveCartEmptyToNotEmpty`() {
-        cart.postValue(emptyList())
+        cart.postValue(emptySet())
 
         argumentCaptor<Boolean>().apply {
             verify(cartEmptyObserver).onChanged(capture())
         }.run { Assert.assertEquals(true, firstValue) }
 
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Boolean>().apply {
             verify(cartEmptyObserver, times(2)).onChanged(capture())
@@ -154,13 +154,13 @@ class CartDialogViewModelTest {
 
     @Test
     fun `givenPokemonInCart whenPokemonCleared thenObserveCartNotEmptyToEmpty`() {
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Boolean>().apply {
             verify(cartEmptyObserver).onChanged(capture())
         }.run { Assert.assertEquals(false, firstValue) }
 
-        cart.postValue(emptyList())
+        cart.postValue(emptySet())
 
         argumentCaptor<Boolean>().apply {
             verify(cartEmptyObserver, times(2)).onChanged(capture())
@@ -171,7 +171,7 @@ class CartDialogViewModelTest {
     fun `givenSinglePokemonInCart whenPokemonCostsTwo thenObserveSubtotalOfTwo`() {
         Mockito.`when`(cartItemOne.count).thenReturn(1)
         Mockito.`when`(cartItemOne.price).thenReturn(2)
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Int>().apply {
             verify(cartSubtotalObserver).onChanged(capture())
@@ -182,7 +182,7 @@ class CartDialogViewModelTest {
     fun `givenThreePokemonInCart whenPokemonCostsTwo thenObserveSubtotalOfSix`() {
         Mockito.`when`(cartItemOne.count).thenReturn(3)
         Mockito.`when`(cartItemOne.price).thenReturn(2)
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Int>().apply {
             verify(cartSubtotalObserver).onChanged(capture())
@@ -193,14 +193,14 @@ class CartDialogViewModelTest {
     fun `givenThreePokemonInCart whenPokemonCostsTwo andOnePokemonRemoved thenObserveSubtotalOfFour`() {
         Mockito.`when`(cartItemOne.count).thenReturn(3)
         Mockito.`when`(cartItemOne.price).thenReturn(2)
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Int>().apply {
             verify(cartSubtotalObserver).onChanged(capture())
         }.run { Assert.assertEquals(6, firstValue) }
 
         Mockito.`when`(cartItemOne.count).thenReturn(2)
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Int>().apply {
             verify(cartSubtotalObserver, times(2)).onChanged(capture())
@@ -214,7 +214,7 @@ class CartDialogViewModelTest {
         Mockito.`when`(cartItemTwo.count).thenReturn(1)
         Mockito.`when`(cartItemTwo.price).thenReturn(8)
 
-        cart.postValue(listOf(cartItemOne, cartItemTwo))
+        cart.postValue(setOf(cartItemOne, cartItemTwo))
 
         argumentCaptor<Int>().apply {
             verify(cartSubtotalObserver).onChanged(capture())
@@ -229,7 +229,7 @@ class CartDialogViewModelTest {
         val subtotal = calculateSubtotal(cartItemOne.price, cartItemOne.count)
         val expected = calculatePoketax(subtotal.toDouble())
 
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Double>().apply {
             verify(cartPoketaxObserver).onChanged(capture())
@@ -246,7 +246,7 @@ class CartDialogViewModelTest {
         val subtotal = calculateSubtotal(cartItemOne.price, cartItemOne.count) + calculateSubtotal(cartItemTwo.price, cartItemTwo.count)
         val expected = calculatePoketax(subtotal.toDouble())
 
-        cart.postValue(listOf(cartItemOne, cartItemTwo))
+        cart.postValue(setOf(cartItemOne, cartItemTwo))
 
         argumentCaptor<Double>().apply {
             verify(cartPoketaxObserver).onChanged(capture())
@@ -262,7 +262,7 @@ class CartDialogViewModelTest {
         val poketax = calculatePoketax(subtotal.toDouble())
         val expected = subtotal.plus(poketax)
 
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Double>().apply {
             verify(cartTotalObserver).onChanged(capture())
@@ -278,7 +278,7 @@ class CartDialogViewModelTest {
         val poketax = calculatePoketax(subtotal.toDouble())
         val expected = calculateTotal(subtotal, poketax)
 
-        cart.postValue(listOf(cartItemOne))
+        cart.postValue(setOf(cartItemOne))
 
         argumentCaptor<Double>().apply {
             verify(cartTotalObserver).onChanged(capture())
@@ -296,7 +296,7 @@ class CartDialogViewModelTest {
         val poketax = calculatePoketax(subtotal.toDouble())
         val expected = calculateTotal(subtotal, poketax)
 
-        cart.postValue(listOf(cartItemOne, cartItemTwo))
+        cart.postValue(setOf(cartItemOne, cartItemTwo))
 
         argumentCaptor<Double>().apply {
             verify(cartTotalObserver).onChanged(capture())
