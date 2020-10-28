@@ -18,7 +18,7 @@ The core technologies featured:
 # Architecture
 The 251 pokemon are supplied via api and added to the database upon the first-start of the application with access to the persistence layer abstracted through repositories.
 Each view is DataBound following the MVVM pattern utilising LiveData to provide a reactive stream directly from repository to view, and vice-versa.
-The three core features, Shop, Filter and Cart and denoted with their own scopes with each of their modules bridging the repository to the view within scope.
+The three core features, Shop, Filter and Cart are denoted with their own scopes with each of their modules bridging the repository to the view within scope.
 
 Each viewmodel and repository has subsequent unit tests driving the overall development of the project with testing-in-mind!
 
