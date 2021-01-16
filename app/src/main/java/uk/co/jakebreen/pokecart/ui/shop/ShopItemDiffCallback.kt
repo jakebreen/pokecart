@@ -2,8 +2,8 @@ package uk.co.jakebreen.pokecart.ui.shop
 
 import androidx.recyclerview.widget.DiffUtil
 
-class ShopItemViewModelDiffCallback(private val oldItemList: List<ShopItemViewModel>,
-                                    private val newItemList: List<ShopItemViewModel>): DiffUtil.Callback() {
+class ShopItemDiffCallback(private val oldItemList: List<ShopItem>,
+                           private val newItemList: List<ShopItem>): DiffUtil.Callback() {
 
     override fun getOldListSize(): Int {
         return oldItemList.size
