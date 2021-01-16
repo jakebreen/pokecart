@@ -7,8 +7,8 @@ import uk.co.jakebreen.pokecart.model.type.Type
 
 class FilterDialogViewModel(private val filterRepository: FilterRepository): ViewModel() {
 
-    val types = filterRepository.getFilterTypes()
-    val stats = filterRepository.getFilterStats()
+    fun observeFilteredTypes() = filterRepository.getFilterTypes()
+    fun observeFilteredStats() = filterRepository.getFilterStats()
 
     fun saveFilters(checkedTypes: Map<Type, Boolean>, health: List<Float>, attack: List<Float>, defense: List<Float>, speed: List<Float>) {
         filterRepository.postFilterTypes(checkedTypes)

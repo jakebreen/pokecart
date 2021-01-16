@@ -53,24 +53,6 @@ class CartDialogViewModel(
         fun calculateTotal(subtotal: Int, poketax: Double): Double {
             return subtotal.plus(poketax)
         }
-
-        @JvmStatic
-        @BindingAdapter("subtotal")
-        fun bindSubtotal(textView: TextView, subtotal: Int) {
-            textView.text = "$".plus(subtotal)
-        }
-
-        @JvmStatic
-        @BindingAdapter("poketax")
-        fun bindPoketax(textView: TextView, poketax: Double) {
-            textView.text = String.format("$%.2f", poketax)
-        }
-
-        @JvmStatic
-        @BindingAdapter("total")
-        fun bindTotal(textView: TextView, total: Double) {
-            textView.text = String.format("$%.2f", total)
-        }
     }
 
 }

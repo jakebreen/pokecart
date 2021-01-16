@@ -45,8 +45,8 @@ class ShopActivity : AppCompatActivity(), ShopAdapter.ShopViewModelClickListener
             adapter = shopAdapter
         }
 
-        shopViewModel.observeViewModels().observe(this, Observer {
-            showViewModels(it)
+        shopViewModel.observeShopItems().observe(this, Observer {
+            showShopItems(it)
         })
 
         shopViewModel.observeCartItemCount().observe(this, Observer { items ->
@@ -61,8 +61,8 @@ class ShopActivity : AppCompatActivity(), ShopAdapter.ShopViewModelClickListener
         })
     }
 
-    private fun showViewModels(viewModels: List<ShopItemViewModel>) {
-        shopAdapter.updateAll(viewModels).apply {
+    private fun showShopItems(items: List<ShopItem>) {
+        shopAdapter.updateAll(items).apply {
             if (shouldResetPosition)
                 rvShop.layoutManager?.apply {
                     scrollToPosition(0)

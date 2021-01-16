@@ -33,7 +33,7 @@ class CartAdapter(private val items: MutableList<CartItem>,
 
     fun updateAll(updated: List<CartItem>) {
         val diffResult = DiffUtil.calculateDiff(
-            CartItemViewModelDiffCallback(
+            CartItemDiffCallback(
                 items,
                 updated
             ), false)

@@ -31,7 +31,7 @@ class ShopViewModelTest {
     @Mock lateinit var pokemonRepository: PokemonRepository
     @Mock lateinit var filterRepository: FilterRepository
     @Mock lateinit var resources: ShopItemResources
-    @Mock lateinit var itemsObserver: Observer<List<ShopItemViewModel>>
+    @Mock lateinit var itemsObserver: Observer<List<ShopItem>>
     @Mock lateinit var cartRepository: CartRepository
     @Mock lateinit var cartItemCountObserver: Observer<Int>
 
@@ -59,12 +59,12 @@ class ShopViewModelTest {
         Mockito.`when`(resources.getImageUriById(3)).thenReturn(Mockito.mock(Uri::class.java))
 
         viewModel = ShopViewModel(pokemonRepository, filterRepository, resources, cartRepository)
-        viewModel.observeViewModels().observeForever(itemsObserver)
+        viewModel.observeShopItems().observeForever(itemsObserver)
         viewModel.observeCartItemCount().observeForever(cartItemCountObserver)
     }
 
     @Test
-    fun `givenObservedFilterRepositoryChanges whenQueryingPokemonRepository andOnePokemonReturned thenObservePokemonChangesAsViewModels`() {
+    fun `givenObservedFilterRepositoryChanges whenQueryingPokemonRepository andOnePokemonReturned thenObservePokemonChangesAsShopItems`() {
         val typesList = mutableListOf<Type>().apply {
             add(Type.BUG)
             add(Type.WATER)
@@ -78,13 +78,13 @@ class ShopViewModelTest {
         Update(typesList, statsMap).also { updates.postValue(it) }
         pokemon.postValue(listOf(pokemonOne))
 
-        argumentCaptor<List<ShopItemViewModel>>().apply {
+        argumentCaptor<List<ShopItem>>().apply {
             verify(itemsObserver).onChanged(capture())
         }.run { assertEquals(pokemon.value?.let { createViewModels(it) }, firstValue) }
     }
 
     @Test
-    fun `givenObservedFilterRepositoryChanges whenQueryingPokemonRepository andThreePokemonReturned thenObservePokemonChangesAsViewModels`() {
+    fun `givenObservedFilterRepositoryChanges whenQueryingPokemonRepository andThreePokemonReturned thenObservePokemonChangesAsShopItems`() {
         val typesList = mutableListOf<Type>().apply {
             add(Type.FIGHTING)
             add(Type.POISON)
@@ -97,7 +97,7 @@ class ShopViewModelTest {
         Update(typesList, statsMap).also { updates.postValue(it) }
         pokemon.postValue(listOf(pokemonOne, pokemonTwo, pokemonThree))
 
-        argumentCaptor<List<ShopItemViewModel>>().apply {
+        argumentCaptor<List<ShopItem>>().apply {
             verify(itemsObserver).onChanged(capture())
         }.run { assertEquals(pokemon.value?.let { createViewModels(it) }, firstValue) }
     }
@@ -214,7 +214,7 @@ class ShopViewModelTest {
         Stat.SPEED to Pair(speed[0], speed[1])
     )
 
-    private fun createViewModels(pokemon: List<Pokemon>) = pokemon.map { ShopItemViewModel.from(it, resources) }.toList()
+    private fun createViewModels(pokemon: List<Pokemon>) = pokemon.map { ShopItem.from(it, resources) }.toList()
 
     private fun mockRepositoryReturnValue(types: List<Type>, stats: Map<Stat, Pair<Int, Int>>) {
         Mockito.`when`(pokemonRepository.getFilteredPokemon(

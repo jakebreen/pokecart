@@ -12,10 +12,10 @@ class ShopViewModel(private val pokemonRepository: PokemonRepository,
                     private val cartRepository: CartRepository
 ): ViewModel() {
 
-    private val viewModels = Transformations.switchMap(filterRepository.observeUpdates()) { update -> updateViewModels(update) }
+    private val shopItems = Transformations.switchMap(filterRepository.observeUpdates()) { update -> updateShopItems(update) }
     private val cartItemCount = Transformations.map(cartRepository.observeUpdates()) { it.map { it.count }.sum() }
 
-    private fun updateViewModels(update: FilterRepository.Update): LiveData<List<ShopItemViewModel>> {
+    private fun updateShopItems(update: FilterRepository.Update): LiveData<List<ShopItem>> {
         val health = update.statsMap[Stat.HEALTH] ?: Pair(0, 300)
         val attack = update.statsMap[Stat.ATTACK] ?: Pair(0, 300)
         val defense = update.statsMap[Stat.DEFENSE] ?: Pair(0, 300)
@@ -23,12 +23,12 @@ class ShopViewModel(private val pokemonRepository: PokemonRepository,
 
         return pokemonRepository.getFilteredPokemon(update.typesList, health, attack, defense, speed).let { pokemonLiveData ->
             Transformations.map(pokemonLiveData) { pokemonList ->
-                pokemonList.map { pokemon -> ShopItemViewModel.from(pokemon, shopResources) }
+                pokemonList.map { pokemon -> ShopItem.from(pokemon, shopResources) }
             }
         }
     }
 
-    fun observeViewModels() = viewModels
+    fun observeShopItems() = shopItems
     fun observeCartItemCount() = cartItemCount
 
     fun addPokemonToCart(id: Int) {

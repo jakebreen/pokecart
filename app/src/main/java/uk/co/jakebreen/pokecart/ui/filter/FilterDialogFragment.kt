@@ -46,8 +46,8 @@ class FilterDialogFragment: DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        filterViewModel.types.observe(viewLifecycleOwner, Observer { showFilterChips(it) })
-        filterViewModel.stats.observe(viewLifecycleOwner, Observer { statsMap ->
+        filterViewModel.observeFilteredTypes().observe(viewLifecycleOwner, Observer { showFilterChips(it) })
+        filterViewModel.observeFilteredStats().observe(viewLifecycleOwner, Observer { statsMap ->
             statsMap[Stat.HEALTH]?.also { healthPair ->   showHealthStats(healthPair.first, healthPair.second) }
             statsMap[Stat.ATTACK]?.also { attackPair ->   showAttackStats(attackPair.first, attackPair.second) }
             statsMap[Stat.DEFENSE]?.also { defensePair -> showDefenseStats(defensePair.first, defensePair.second) }

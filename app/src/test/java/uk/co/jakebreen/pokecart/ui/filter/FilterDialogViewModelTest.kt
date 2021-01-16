@@ -37,8 +37,8 @@ class FilterDialogViewModelTest {
         Mockito.`when`(filterRepository.getFilterStats()).thenReturn(stats)
 
         viewModel = FilterDialogViewModel(filterRepository)
-        viewModel.types.observeForever(typesObserver)
-        viewModel.stats.observeForever(statsObserver)
+        viewModel.observeFilteredTypes().observeForever(typesObserver)
+        viewModel.observeFilteredStats().observeForever(statsObserver)
     }
 
     @Test
